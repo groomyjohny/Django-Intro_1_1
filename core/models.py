@@ -26,6 +26,7 @@ class ApplicantModel(models.Model):
     phone_number = models.BigIntegerField('Номер телефона', blank=True)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров')
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
+    image = models.ImageField("Изображение", blank=True)
 
     def __str__(self):
         return f'Заявитель {self.full_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'

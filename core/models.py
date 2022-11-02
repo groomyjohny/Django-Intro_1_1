@@ -1,5 +1,5 @@
 from django.db import models
-
+import datetime
 
 class EmergencyServiceModel(models.Model):
     """Модель экстренной службы"""
@@ -25,6 +25,7 @@ class ApplicantModel(models.Model):
     birth_date = models.DateField('Дата рождения')
     phone_number = models.BigIntegerField('Номер телефона', blank=True)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров')
+    health_state.short_description = 'аллергоанамнез, хронические заболевания и т.п.'
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
     image = models.ImageField("Изображение", blank=True)
 
@@ -39,7 +40,7 @@ class ApplicantModel(models.Model):
 
 class AppealModel(models.Model):
     """Модель обращения"""
-    date = models.DateTimeField('Дата')
+    date = models.DateTimeField('Дата', default=datetime.datetime.now())
     number = models.IntegerField('Номер')
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)

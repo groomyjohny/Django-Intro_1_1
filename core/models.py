@@ -46,6 +46,7 @@ class AppealModel(models.Model):
         DONE = 'Завершено'
     date = models.DateTimeField('Дата', default=datetime.datetime.now())
     number = models.PositiveIntegerField('Номер')
+    card_number = models.PositiveIntegerField('Номер карточки', unique=True, editable=False, null=True)
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
     status = models.CharField(max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)

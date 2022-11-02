@@ -12,6 +12,7 @@ class EmergencyServiceModel(models.Model):
     class Meta:
         verbose_name = "Экстренная служба"
         verbose_name_plural = "Экстренные службы"
+        ordering = ['serviceCode']
 
 class ApplicantModel(models.Model):
     fullName = models.CharField('ФИО', max_length=128)
@@ -23,6 +24,7 @@ class ApplicantModel(models.Model):
     class Meta:
         verbose_name = "Заявитель"
         verbose_name_plural = "Заявители"
+        ordering = ['fullName']
 class AppealModel(models.Model):
     date = models.DateTimeField("Дата")
     number = models.IntegerField("Номер")
@@ -39,3 +41,4 @@ class AppealModel(models.Model):
     class Meta:
         verbose_name = "Обращение"
         verbose_name_plural = "Обращения"
+        ordering = ['date', 'number']

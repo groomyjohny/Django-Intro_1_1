@@ -14,4 +14,4 @@ class ApplicantAdmin(admin.ModelAdmin):
 
 @admin.register(core.models.AppealModel)
 class AppealAdmin(admin.ModelAdmin):
-    list_display = ('date', 'number', 'applicantName')
+    list_display = ('date', 'number', 'applicantName', 'servicesString')

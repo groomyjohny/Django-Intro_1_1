@@ -29,10 +29,20 @@ class AppealModel(models.Model):
     date = models.DateTimeField("Дата")
     number = models.IntegerField("Номер")
     applicantId = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
+    services = models.ManyToManyField(EmergencyServiceModel, blank=True)
 
     def applicantName(self):
         return self.applicantId.fullName
     applicantName.short_description = "ФИО заявителя"
+
+    def servicesString(self):
+        #return "Hello"
+        s = ', '.join([i.name for i in self.services.all()])
+        if s == '':
+            return "(нет служб)"
+        else:
+            return s
+    servicesString.short_description = "Задействованные службы"
 
     def __str__(self):
         #return f"Обращение №{self.number} от {self.date}, заявитель: {self.applicantName()}"

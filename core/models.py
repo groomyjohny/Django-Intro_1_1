@@ -23,8 +23,8 @@ class ApplicantModel(models.Model):
         F = 'Ж'
     full_name = models.CharField('ФИО', max_length=128)
     birth_date = models.DateField('Дата рождения')
-    phone_number = models.BigIntegerField('Номер телефона')
-    health_state = models.TextField('Состояние здоровья')
+    phone_number = models.BigIntegerField('Номер телефона', blank=True)
+    health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров')
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
 
     def __str__(self):

@@ -10,7 +10,7 @@ class EmergencySeviceAdmin(admin.ModelAdmin):
 
 @admin.register(core.models.ApplicantModel)
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display = ('fullName', 'phoneNumber', 'healthState')
+    list_display = ('fullName', 'birthDate', 'phoneNumber', 'healthState')
 
 @admin.register(core.models.AppealModel)
 class AppealAdmin(admin.ModelAdmin):

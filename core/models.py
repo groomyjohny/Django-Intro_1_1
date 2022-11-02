@@ -16,11 +16,12 @@ class EmergencyServiceModel(models.Model):
 
 class ApplicantModel(models.Model):
     fullName = models.CharField('ФИО', max_length=128)
+    birthDate = models.DateField("Дата рождения")
     phoneNumber = models.BigIntegerField('Номер телефона')
     healthState = models.TextField("Состояние здоровья")
 
     def __str__(self):
-        return f"Заявитель {self.fullName}, телефон: {self.phoneNumber}"
+        return f"Заявитель {self.fullName}, р. {self.birthDate}, телефон: {self.phoneNumber}"
     class Meta:
         verbose_name = "Заявитель"
         verbose_name_plural = "Заявители"

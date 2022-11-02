@@ -1,10 +1,11 @@
 from django.db import models
 import datetime
 
+
 class EmergencyServiceModel(models.Model):
     """Модель экстренной службы"""
     name = models.CharField('Название', max_length=128)
-    service_code = models.IntegerField('Код службы')
+    service_code = models.PositiveIntegerField('Код службы')
     phone_number = models.CharField('Номер телефона', max_length=16)
 
     def __str__(self):
@@ -41,7 +42,7 @@ class ApplicantModel(models.Model):
 class AppealModel(models.Model):
     """Модель обращения"""
     date = models.DateTimeField('Дата', default=datetime.datetime.now())
-    number = models.IntegerField('Номер')
+    number = models.PositiveIntegerField('Номер')
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
 
@@ -67,3 +68,14 @@ class AppealModel(models.Model):
         verbose_name = 'Обращение'
         verbose_name_plural = 'Обращения'
         ordering = ['date', 'number']
+
+
+class AccidentModel(models.Model):
+    """Модель происшествия"""
+    number = models.PositiveIntegerField('Номер карточки')
+    injured_count = models.PositiveIntegerField('Количество пострадавших')
+    dont_call = models.BooleanField('Не звонить')
+
+    class Meta:
+        verbose_name = 'Происшествие'
+        verbose_name_plural = 'Происшествия'

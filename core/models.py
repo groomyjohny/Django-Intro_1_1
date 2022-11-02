@@ -41,10 +41,14 @@ class ApplicantModel(models.Model):
 
 class AppealModel(models.Model):
     """Модель обращения"""
+    class StatusChoice(models.TextChoices):
+        IN_PROGRESS = 'В работе'
+        DONE = 'Завершено'
     date = models.DateTimeField('Дата', default=datetime.datetime.now())
     number = models.PositiveIntegerField('Номер')
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
+    status = models.CharField(max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""

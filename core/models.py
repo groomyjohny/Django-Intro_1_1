@@ -79,3 +79,6 @@ class AccidentModel(models.Model):
     class Meta:
         verbose_name = 'Происшествие'
         verbose_name_plural = 'Происшествия'
+        indexes = [
+            models.Index(fields=['card_number'])
+        ]

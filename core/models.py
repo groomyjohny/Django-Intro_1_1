@@ -76,7 +76,7 @@ class AppealModel(models.Model):
 
 class AccidentModel(models.Model):
     """Модель происшествия"""
-    card_number = models.PositiveIntegerField('Номер карточки')
+    number = models.PositiveIntegerField('Номер')
     injured_count = models.PositiveIntegerField('Количество пострадавших')
     dont_call = models.BooleanField('Не звонить')
 
@@ -84,5 +84,5 @@ class AccidentModel(models.Model):
         verbose_name = 'Происшествие'
         verbose_name_plural = 'Происшествия'
         indexes = [
-            models.Index(fields=['card_number'])
+            models.Index(fields=['number'])
         ]

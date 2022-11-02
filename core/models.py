@@ -44,7 +44,7 @@ class AppealModel(models.Model):
     class StatusChoice(models.TextChoices):
         IN_PROGRESS = 'В работе'
         DONE = 'Завершено'
-    date = models.DateTimeField('Дата', default=datetime.datetime.now())
+    date = models.DateTimeField('Дата', default=datetime.datetime.now)
     number = models.PositiveIntegerField('Номер')
     card_number = models.PositiveIntegerField('Номер карточки', unique=True, editable=False, null=True)
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')

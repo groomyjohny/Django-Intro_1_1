@@ -1,53 +1,55 @@
 from django.db import models
 
-# Create your models here.
+
 class EmergencyServiceModel(models.Model):
     name = models.CharField('Название', max_length=128)
-    serviceCode = models.IntegerField('Код службы')
-    phoneNumber = models.CharField('Номер телефона', max_length=16)
+    service_code = models.IntegerField('Код службы')
+    phone_number = models.CharField('Номер телефона', max_length=16)
 
     def __str__(self):
-        return f"{self.name}, код {self.serviceCode}, номер {self.phoneNumber}"
+        return f"{self.name}, код {self.service_code}, номер {self.phone_number}"
 
     class Meta:
         verbose_name = "Экстренная служба"
         verbose_name_plural = "Экстренные службы"
-        ordering = ['serviceCode']
+        ordering = ['service_code']
+
 
 class ApplicantModel(models.Model):
-    fullName = models.CharField('ФИО', max_length=128)
-    birthDate = models.DateField("Дата рождения")
-    phoneNumber = models.BigIntegerField('Номер телефона')
-    healthState = models.TextField("Состояние здоровья")
+    full_name = models.CharField('ФИО', max_length=128)
+    birth_date = models.DateField("Дата рождения")
+    phone_number = models.BigIntegerField('Номер телефона')
+    health_state = models.TextField("Состояние здоровья")
 
     def __str__(self):
-        return f"Заявитель {self.fullName}, р. {self.birthDate}, телефон: {self.phoneNumber}"
+        return f"Заявитель {self.full_name}, р. {self.birth_date}, телефон: {self.phone_number}"
+
     class Meta:
         verbose_name = "Заявитель"
         verbose_name_plural = "Заявители"
-        ordering = ['fullName']
+        ordering = ['full_name']
+
+
 class AppealModel(models.Model):
     date = models.DateTimeField("Дата")
     number = models.IntegerField("Номер")
-    applicantId = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
+    applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
 
-    def applicantName(self):
-        return self.applicantId.fullName
-    applicantName.short_description = "ФИО заявителя"
+    def applicant_name(self):
+        return self.applicant.full_name
+    applicant_name.short_description = "ФИО заявителя"
 
-    def servicesString(self):
-        #return "Hello"
+    def services_string(self):
         s = ', '.join([i.name for i in self.services.all()])
         if s == '':
             return "(нет служб)"
         else:
             return s
-    servicesString.short_description = "Задействованные службы"
+    services_string.short_description = "Задействованные службы"
 
     def __str__(self):
-        #return f"Обращение №{self.number} от {self.date}, заявитель: {self.applicantName()}"
-        return f"Обращение №{self.number} от {self.date}, заявитель: {self.applicantName()}"
+        return f"Обращение №{self.number} от {self.date}, заявитель: {self.applicant_name()}"
 
     class Meta:
         verbose_name = "Обращение"

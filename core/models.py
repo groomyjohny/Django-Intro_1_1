@@ -48,8 +48,10 @@ class AppealModel(models.Model):
     number = models.PositiveIntegerField('Номер')
     card_number = models.PositiveIntegerField('Номер карточки', unique=True, editable=False, null=True)
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
+    applicant.verbose_name = "Заявитель"
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
-    status = models.CharField(max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
+    services.verbose_name = "Задействованные службы"
+    status = models.CharField("Статус", max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""

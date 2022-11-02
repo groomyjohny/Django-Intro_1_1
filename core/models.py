@@ -28,7 +28,7 @@ class ApplicantModel(models.Model):
 class AppealModel(models.Model):
     date = models.DateTimeField("Дата")
     number = models.IntegerField("Номер")
-    applicantId = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE)
+    applicantId = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
 
     def applicantName(self):
         return self.applicantId.fullName

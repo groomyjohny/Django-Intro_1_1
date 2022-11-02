@@ -17,7 +17,7 @@ class ApplicantAdmin(admin.ModelAdmin):
 
 @admin.register(core.models.AppealModel)
 class AppealAdmin(admin.ModelAdmin):
-    list_display = ('date', 'number', 'status', 'applicant_name', 'services_string')
+    list_display = ('date', 'number', 'card_number', 'status', 'applicant_name', 'services_string')
 
 
 @admin.register(core.models.AccidentModel)

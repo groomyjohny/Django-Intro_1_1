@@ -2,6 +2,7 @@ from django.db import models
 
 
 class EmergencyServiceModel(models.Model):
+    """Модель экстренной службы"""
     name = models.CharField('Название', max_length=128)
     service_code = models.IntegerField('Код службы')
     phone_number = models.CharField('Номер телефона', max_length=16)
@@ -16,6 +17,7 @@ class EmergencyServiceModel(models.Model):
 
 
 class ApplicantModel(models.Model):
+    """Модель заявителя"""
     full_name = models.CharField('ФИО', max_length=128)
     birth_date = models.DateField('Дата рождения')
     phone_number = models.BigIntegerField('Номер телефона')
@@ -31,16 +33,19 @@ class ApplicantModel(models.Model):
 
 
 class AppealModel(models.Model):
+    """Модель обращения"""
     date = models.DateTimeField('Дата')
     number = models.IntegerField('Номер')
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
 
     def applicant_name(self):
+        """Возвращает ФИО заявителя этого обращения"""
         return self.applicant.full_name
     applicant_name.short_description = 'ФИО заявителя'
 
     def services_string(self):
+        """Возвращает названия служб, задействованных в этом обращении, в виде строки. Если их нет, то возращается '(нет служб)'"""
         s = ', '.join([i.name for i in self.services.all()])
         if s == '':
             return '(нет служб)'

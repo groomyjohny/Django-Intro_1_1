@@ -25,8 +25,8 @@ class ApplicantModel(models.Model):
     full_name = models.CharField('ФИО', max_length=128)
     birth_date = models.DateField('Дата рождения')
     phone_number = models.BigIntegerField('Номер телефона', blank=True)
-    health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров')
-    health_state.short_description = 'аллергоанамнез, хронические заболевания и т.п.'
+    health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
+                                    help_text='аллергоанамнез, хронические заболевания и т.п.')
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
     image = models.ImageField("Изображение", blank=True)
 
@@ -72,7 +72,7 @@ class AppealModel(models.Model):
 
 class AccidentModel(models.Model):
     """Модель происшествия"""
-    number = models.PositiveIntegerField('Номер карточки')
+    card_number = models.PositiveIntegerField('Номер карточки')
     injured_count = models.PositiveIntegerField('Количество пострадавших')
     dont_call = models.BooleanField('Не звонить')
 

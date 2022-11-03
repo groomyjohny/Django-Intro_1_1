@@ -57,7 +57,7 @@ difference = ???
 14) models.AppealModel.objects.filter(date__gt=dateBegin, date__lte=dateEnd)
 15) models.ApplicantModel.objects.filter(phone_number=None).count()
 16) models.ApplicantModel.objects.all().distinct() # ?
-17) 
+17) !!!
 18) models.ApplicantModel.objects.values('phone_number')
 19)
 fields = [f.name for f in models.ApplicantModel._meta.get_fields()]
@@ -66,3 +66,7 @@ models.ApplicantModel.objects.values(*fields)
 
 20) models.EmergencyServiceModel.objects.raw('SELECT * from core_emergencyservicemodel')
 21) models.ApplicantModel.objects.get_or_create(phone_number='12341234')
+22)
+appl = models.ApplicantModel.objects.get_or_create(phone_number='12341234')[0]
+appl.phone_number = '23452345'
+appl.save()

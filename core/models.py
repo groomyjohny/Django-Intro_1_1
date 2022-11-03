@@ -33,7 +33,10 @@ class ApplicantModel(models.Model):
     image = models.ImageField("Изображение", blank=True)
 
     def __str__(self):
-        return f'Заявитель {self.surname} {self.first_name} {self.patronymic_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
+        try:
+            return f'Заявитель {self.surname} {self.first_name} {self.patronymic_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
+        except TypeError:
+            return f'(Ошибка при получении описания экземляра {self.__class__.__name__})'
 
     #def __repr__(self):
         #return "<%s: %s>" % ('ApplicantModel', self.getStringRepresentation())
@@ -42,7 +45,10 @@ class ApplicantModel(models.Model):
         #return "Stub"
 
     def full_name(self):
-        return ' '.join([self.surname, self.first_name, self.patronymic_name])
+        try:
+            return ' '.join([self.surname, self.first_name, self.patronymic_name])
+        except TypeError:
+            return '(не удалось получить полное имя)'
     full_name.short_description = 'ФИО'
 
     class Meta:

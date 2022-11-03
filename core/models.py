@@ -25,7 +25,7 @@ class ApplicantModel(models.Model):
     first_name = models.CharField("Имя", max_length=40, null=True)
     surname = models.CharField("Фамилия", max_length=40, null=True)
     patronymic_name = models.CharField("Отчество", max_length=40, null=True)
-    birth_date = models.DateField('Дата рождения')
+    birth_date = models.DateField('Дата рождения', null=True)
     phone_number = models.CharField('Номер телефона', blank=True, null=True, max_length=20)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
                                     help_text='аллергоанамнез, хронические заболевания и т.п.')

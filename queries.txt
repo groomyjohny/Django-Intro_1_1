@@ -65,3 +65,4 @@ fields.remove('health_state')
 models.ApplicantModel.objects.values(*fields)
 
 20) models.EmergencyServiceModel.objects.raw('SELECT * from core_emergencyservicemodel')
+21) models.ApplicantModel.objects.get_or_create(phone_number='12341234')

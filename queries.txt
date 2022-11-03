@@ -45,3 +45,23 @@ models.ApplicantModel.objects.exclude(birth_date__gt=birth_date_border) # OR: mo
 11) models.ApplicantModel.objects.filter(phone_number=None) | models.ApplicantModel.objects.filter(image='') # image=None doesn't work
 
 12) models.ApplicantModel.objects.filter(phone_number__startswith='8917')
+
+13)
+qs1 = models.ApplicantModel.objects.filter(phone_number=None) | models.ApplicantModel.objects.filter(image='')
+qs2 = models.ApplicantModel.objects.filter(phone_number__startswith='8917')
+
+union = qs1 | qs2
+intersection = qs1 & qs2
+difference = ???
+
+14) models.AppealModel.objects.filter(date__gt=dateBegin, date__lte=dateEnd)
+15) models.ApplicantModel.objects.filter(phone_number=None).count()
+16) models.ApplicantModel.objects.all().distinct() # ?
+17) 
+18) models.ApplicantModel.objects.values('phone_number')
+19)
+fields = [f.name for f in models.ApplicantModel._meta.get_fields()]
+fields.remove('health_state')
+models.ApplicantModel.objects.values(*fields)
+
+20) models.EmergencyServiceModel.objects.raw('SELECT * from core_emergencyservicemodel')

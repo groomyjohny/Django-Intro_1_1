@@ -5,7 +5,7 @@ import datetime
 class EmergencyServiceModel(models.Model):
     """Модель экстренной службы"""
     name = models.CharField('Название', max_length=128)
-    service_code = models.PositiveIntegerField('Код службы')
+    service_code = models.CharField('Код службы', max_length=16)
     phone_number = models.CharField('Номер телефона', max_length=16)
 
     def __str__(self):
@@ -22,7 +22,9 @@ class ApplicantModel(models.Model):
     class GenderChoices(models.TextChoices):
         M = 'М'  # строка 'М' - русская, поле - латинское
         F = 'Ж'
-    full_name = models.CharField('ФИО', max_length=128)
+    first_name = models.CharField("Имя", max_length=40, null=True)
+    surname = models.CharField("Фамилия", max_length=40, null=True)
+    patronymic_name = models.CharField("Отчество", max_length=40, null=True)
     birth_date = models.DateField('Дата рождения')
     phone_number = models.BigIntegerField('Номер телефона', blank=True)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
@@ -33,10 +35,20 @@ class ApplicantModel(models.Model):
     def __str__(self):
         return f'Заявитель {self.full_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
 
+    def __repr__(self):
+        # TODO: not defining this causes infinite recursion. __str__ tries to call __repr__, which calls __str__ again, etc
+        # defining causes admin panel for Appeal to stop showing Applicant name
+        return "Stub"
+
+    def full_name(self):
+        return ' '.join([self.surname, self.first_name, self.patronymic_name])
+    full_name.short_description = 'ФИО'
+
     class Meta:
         verbose_name = 'Заявитель'
         verbose_name_plural = 'Заявители'
-        ordering = ['full_name']
+        # this is similar to full_name if Surname FirstName Patronymic format is used (i.e. Kuznetzov Anton Ivanovich)
+        ordering = ['surname', 'first_name', 'patronymic_name']
 
 
 class AppealModel(models.Model):

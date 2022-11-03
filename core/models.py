@@ -34,7 +34,7 @@ class ApplicantModel(models.Model):
 
     def __str__(self):
         try:
-            return f'Заявитель {self.surname} {self.first_name} {self.patronymic_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
+            return f'Заявитель {self.full_name()}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
         except TypeError:
             return f'(Ошибка при получении описания экземляра {self.__class__.__name__})'
 
@@ -52,7 +52,20 @@ class ApplicantModel(models.Model):
         ordering = ['surname', 'first_name', 'patronymic_name']
 
 
-class AppealModel(models.Model):
+class ServicePrintable:
+    def services_string(self):
+        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
+        Если их нет, то возращается строка '(нет служб)'"""
+        s = ', '.join([i.name for i in self.services.all()])
+        if s == '':
+            return '(нет служб)'
+        else:
+            return s
+
+    services_string.short_description = 'Задействованные службы'
+
+
+class AppealModel(models.Model, ServicePrintable):
     """Модель обращения"""
     class StatusChoice(models.TextChoices):
         IN_PROGRESS = 'В работе'
@@ -72,16 +85,6 @@ class AppealModel(models.Model):
         return self.applicant.full_name()
     applicant_name.short_description = 'ФИО заявителя'
 
-    def services_string(self):
-        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
-        Если их нет, то возращается строка '(нет служб)'"""
-        s = ', '.join([i.name for i in self.services.all()])
-        if s == '':
-            return '(нет служб)'
-        else:
-            return s
-    services_string.short_description = 'Задействованные службы'
-
     def __str__(self):
         return f'Обращение №{self.number} от {self.date}, заявитель: {self.applicant_name()}'
 
@@ -91,23 +94,13 @@ class AppealModel(models.Model):
         ordering = ['date', 'number']
 
 
-class AccidentModel(models.Model):
+class AccidentModel(models.Model, ServicePrintable):
     """Модель происшествия"""
     number = models.PositiveIntegerField('Номер')
     injured_count = models.PositiveIntegerField('Количество пострадавших')
     dont_call = models.BooleanField('Не звонить')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
     addition_datetime = models.DateTimeField("Дата добавления", null=True)
-
-    def services_string(self):  # TODO: exact repeat of code from AppealModel, needs rework to remove this copy
-        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
-        Если их нет, то возращается строка '(нет служб)'"""
-        s = ', '.join([i.name for i in self.services.all()])
-        if s == '':
-            return '(нет служб)'
-        else:
-            return s
-    services_string.short_description = 'Задействованные службы'
 
     class Meta:
         verbose_name = 'Происшествие'

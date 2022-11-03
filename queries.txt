@@ -1,0 +1,47 @@
+Queryset requests:
+
+Fitering:
+1) 
+models.ApplicantModel.objects.get(id=1)
+models.ApplicantModel.objects.filter(id=1)
+
+2) models.ApplicantModel.objects.filter(appeals=None).exclude(gender='Ж')
+3) models.ApplicantModel.objects.order_by('id')
+
+4)
+from datetime import datetime
+from dateutil.relativedelta import relativedelta # needs python-dateutil package
+models.ApplicantModel.objects.filter(birth_date__gt=datetime.now() - relativedelta(years=18))
+
+# Without python-dateutil:
+
+now = datetime.now()
+birth_date_border = datetime(now.year-18, now.month, now.day)
+models.ApplicantModel.objects.filter(birth_date__gt=birth_date_border)
+
+
+5)
+
+from datetime import datetime
+from dateutil.relativedelta import relativedelta # needs python-dateutil package
+models.ApplicantModel.objects.exclude(birth_date__gt=datetime.now() - relativedelta(years=18))
+
+# Without python-dateutil
+
+now = datetime.now()
+birth_date_border = datetime(now.year-18, now.month, now.day)
+models.ApplicantModel.objects.exclude(birth_date__gt=birth_date_border) # OR: models.ApplicantModel.objects.filter(birth_date__lte=birth_date_border)
+
+6) models.ApplicantModel.objects.count() > 0
+
+7) models.ApplicantModel.objects.filter(first_name__icontains=search_name)
+
+8) models.AppealModel.objects.filter(services=None)
+
+9) models.AppealModel.objects.filter(services__service_code__contains='03')
+
+10) models.AppealModel.objects.filter(date__lt=target_date) # where target_date is a defined date
+
+11) models.ApplicantModel.objects.filter(phone_number=None) | models.ApplicantModel.objects.filter(image='') # image=None doesn't work
+
+12) models.ApplicantModel.objects.filter(phone_number__startswith='8917')

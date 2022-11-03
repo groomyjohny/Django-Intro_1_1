@@ -101,6 +101,18 @@ class AccidentModel(models.Model):
     number = models.PositiveIntegerField('Номер')
     injured_count = models.PositiveIntegerField('Количество пострадавших')
     dont_call = models.BooleanField('Не звонить')
+    services = models.ManyToManyField(EmergencyServiceModel, blank=True)
+    addition_datetime = models.DateTimeField("Дата добавления", null=True)
+
+    def services_string(self): #TODO: exact repeat of code from AppealModel, needs rework to remove this copy
+        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
+        Если их нет, то возращается строка '(нет служб)'"""
+        s = ', '.join([i.name for i in self.services.all()])
+        if s == '':
+            return '(нет служб)'
+        else:
+            return s
+    services_string.short_description = 'Задействованные службы'
 
     class Meta:
         verbose_name = 'Происшествие'

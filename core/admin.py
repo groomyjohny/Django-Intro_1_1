@@ -22,4 +22,4 @@ class AppealAdmin(admin.ModelAdmin):
 
 @admin.register(core.models.AccidentModel)
 class AccidentAdmin(admin.ModelAdmin):
-    list_display = ('number', 'injured_count', 'dont_call')
+    list_display = ('number', 'addition_datetime', 'injured_count', 'dont_call', 'services_string')

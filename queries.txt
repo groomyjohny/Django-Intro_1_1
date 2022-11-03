@@ -57,7 +57,7 @@ difference = ???
 14) models.AppealModel.objects.filter(date__gt=dateBegin, date__lte=dateEnd)
 15) models.ApplicantModel.objects.filter(phone_number=None).count()
 16) models.ApplicantModel.objects.all().distinct() # ?
-17) !!!
+17) ???
 18) models.ApplicantModel.objects.values('phone_number')
 19)
 fields = [f.name for f in models.ApplicantModel._meta.get_fields()]
@@ -70,3 +70,46 @@ models.ApplicantModel.objects.values(*fields)
 appl = models.ApplicantModel.objects.get_or_create(phone_number='12341234')[0]
 appl.phone_number = '23452345'
 appl.save()
+
+23)
+models.ApplicantModel.objects.bulk_create([
+      models.ApplicantModel(first_name='Рустам', surname='Нуриев', patronymic_name='Рашитович'),
+      models.ApplicantModel(first_name='Тамара', surname='Романова', patronymic_name='Григорьевна', gender='Ж', birth_date='1977-02-12'),
+      models.ApplicantModel(first_name='Глеб', surname='Николаев', patronymic_name='Дмитриевич', gender='М', birth_date='1994-06-30'),
+	  ])
+	  
+24) models.ApplicantModel.objects.filter(id__range=(7,12)).update(health_state='Полностью здоров(а)')
+25) # makes 2 queries, should 1? Returned name is correct
+
+django.db.reset_queries()
+len(django.db.connection.queries)
+models.AppealModel.objects.get(id=3).applicant.full_name
+len(django.db.connection.queries)
+
+26) 
+appeals = models.AppealModel.objects.all()
+for i in appeals:
+	print(i.services_string())
+27) ??
+
+28) models.AppealModel.objects.none()
+29) 
+from django.db.models import Avg
+models.AccidentModel.objects.aggregate(Avg('injured_count'))
+
+30)  
+from django.db.models import Sum
+models.AccidentModel.objects.aggregate(Sum('injured_count'))
+
+31) ...
+qs = models.AccidentModel.objects.annotate(Count('services'))
+for i in qs: # qs.values('services__count')
+	print(i.number, i.injured_count, i.services__count)
+	
+32) models.AccidentModel.objects.annotate(Count('services')).aggregate(Avg('services__count'))
+
+33)
+from django.db.models import Min, Max
+models.AccidentModel.objects.aggregate(Min('injured_count'),Max('injured_count'))
+
+34)

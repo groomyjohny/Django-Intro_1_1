@@ -71,6 +71,7 @@ class AppealModel(models.Model):
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
     services.verbose_name = "Задействованные службы"
     status = models.CharField("Статус", max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
+    description = models.TextField("Описание", blank=True, null=True)
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""

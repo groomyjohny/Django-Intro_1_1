@@ -1,6 +1,8 @@
 Queryset requests:
 
 Fitering:
+from core import *
+
 1) 
 models.ApplicantModel.objects.get(id=1)
 models.ApplicantModel.objects.filter(id=1)
@@ -57,7 +59,7 @@ difference = ???
 14) models.AppealModel.objects.filter(date__gt=dateBegin, date__lte=dateEnd)
 15) models.ApplicantModel.objects.filter(phone_number=None).count()
 16) models.ApplicantModel.objects.all().distinct() # ?
-17) ???
+17) models.AppealModel.objects.filter(description__icontains=word)
 18) models.ApplicantModel.objects.values('phone_number')
 19)
 fields = [f.name for f in models.ApplicantModel._meta.get_fields()]
@@ -89,8 +91,9 @@ len(django.db.connection.queries)
 26) 
 appeals = models.AppealModel.objects.all()
 for i in appeals:
-	print(i.services_string())
-27) ??
+	print(i.number, [s.service_code for s in i.services.all()])
+	
+27) models.AccidentModel.objects.values_list('addition_datetime')
 
 28) models.AppealModel.objects.none()
 29) 
@@ -112,4 +115,7 @@ for i in qs: # qs.values('services__count')
 from django.db.models import Min, Max
 models.AccidentModel.objects.aggregate(Min('injured_count'),Max('injured_count'))
 
-34)
+34) 
+qs = models.ApplicantModel.objects.all().annotate(Count('appeals'))
+for i in qs: 
+	print(i.appeals__count)

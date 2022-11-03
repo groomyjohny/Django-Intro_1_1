@@ -1,12 +1,60 @@
 Queryset requests:
+Saving:
+1)
 
-Fitering:
-from core import *
+models.EmergencyServiceModel.objects.create(name='Новая экстренная служба',service_code='113',phone_number='2334')
+models.ApplicantModel.objects.create(surname='Андреев', first_name='Павел', patronymic_name='Валерьевич', birth_date='1989-02-11', gender='М')
+models.AppealModel.objects.create(number=91, applicant_id=2, description='Тест')
 
+m = models.EmergencyServiceModel()
+m.name = 'Новая 2-я экстренная служба'
+m.service_code = '129'
+m.phone_number = '888'
+m.save()
+
+models.ApplicantModel(surname='Красина', first_name='Елена', patronymic_name='Анатольевна', birth_date='1992-07-12', gender='Ж').save()
+
+m = models.AppealModel()
+m.number = 110
+m.applicant_id = 8
+m.description = 'Новое обращение'
+m.save()
+
+2) ???
+3) 
+
+models.AppealModel.objects.get(id=7).services.add(1,3,4)
+
+s = models.EmergencyServiceModel.objects.filter(id__range=(2,6))
+models.AppealModel.objects.get(id=6).services.set(s)
+
+Queries:
 1) 
 models.ApplicantModel.objects.get(id=1)
 models.ApplicantModel.objects.filter(id=1)
 
+2)
+models.AppealModel.objects.filter(applicant__id=target_id)
+models. ???
+
+3) models.EmergencyServiceModel.objects.all()[:3]
+4) models.ApplicantModel.objects.order_by('-id')[:5]
+5) 
+models.AppealModel.objects.earliest('date')
+models.AppealModel.objects.latest('date')
+models.AppealModel.objects.order_by('date')[0]
+models.AppealModel.objects.order_by('-date')[0]
+
+6) models.AppealModel.objects.all()[::2]
+7) 1. Подробности в файле queries_more.txt
+8) models.AppealModel.objects.count()
+9) models.AppealModel.objects.order_by('?').first()
+
+=============================
+Fitering:
+from core import *
+
+1) models.AppealModel.objects.filter(applicant__id=1)
 2) models.ApplicantModel.objects.filter(appeals=None).exclude(gender='Ж')
 3) models.ApplicantModel.objects.order_by('id')
 
@@ -119,3 +167,8 @@ models.AccidentModel.objects.aggregate(Min('injured_count'),Max('injured_count')
 qs = models.ApplicantModel.objects.all().annotate(Count('appeals'))
 for i in qs: 
 	print(i.appeals__count)
+	
+================================
+DOP:
+1) models.AppealModel.objects.exclude(services=None).update(status='Завершено')
+2) models.ApplicantModel.objects.filter(phone_number=None).delete()

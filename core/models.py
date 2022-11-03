@@ -38,12 +38,6 @@ class ApplicantModel(models.Model):
         except TypeError:
             return f'(Ошибка при получении описания экземляра {self.__class__.__name__})'
 
-    #def __repr__(self):
-        #return "<%s: %s>" % ('ApplicantModel', self.getStringRepresentation())
-        # TODO: not defining this causes infinite recursion. __str__ tries to call __repr__, which calls __str__ again, etc
-        # defining causes admin panel for Appeal to stop showing Applicant name
-        #return "Stub"
-
     def full_name(self):
         try:
             return ' '.join([self.surname, self.first_name, self.patronymic_name])
@@ -75,7 +69,7 @@ class AppealModel(models.Model):
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""
-        return self.applicant.full_name
+        return self.applicant.full_name()
     applicant_name.short_description = 'ФИО заявителя'
 
     def services_string(self):
@@ -105,7 +99,7 @@ class AccidentModel(models.Model):
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
     addition_datetime = models.DateTimeField("Дата добавления", null=True)
 
-    def services_string(self): #TODO: exact repeat of code from AppealModel, needs rework to remove this copy
+    def services_string(self):  # TODO: exact repeat of code from AppealModel, needs rework to remove this copy
         """Возвращает названия служб, задействованных в этом обращении, в виде строки.
         Если их нет, то возращается строка '(нет служб)'"""
         s = ', '.join([i.name for i in self.services.all()])

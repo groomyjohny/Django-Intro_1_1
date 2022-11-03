@@ -26,19 +26,20 @@ class ApplicantModel(models.Model):
     surname = models.CharField("Фамилия", max_length=40, null=True)
     patronymic_name = models.CharField("Отчество", max_length=40, null=True)
     birth_date = models.DateField('Дата рождения')
-    phone_number = models.BigIntegerField('Номер телефона', blank=True)
+    phone_number = models.CharField('Номер телефона', blank=True, null=True, max_length=20)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
                                     help_text='аллергоанамнез, хронические заболевания и т.п.')
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
     image = models.ImageField("Изображение", blank=True)
 
     def __str__(self):
-        return f'Заявитель {self.full_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
+        return f'Заявитель {self.surname} {self.first_name} {self.patronymic_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
 
-    def __repr__(self):
+    #def __repr__(self):
+        #return "<%s: %s>" % ('ApplicantModel', self.getStringRepresentation())
         # TODO: not defining this causes infinite recursion. __str__ tries to call __repr__, which calls __str__ again, etc
         # defining causes admin panel for Appeal to stop showing Applicant name
-        return "Stub"
+        #return "Stub"
 
     def full_name(self):
         return ' '.join([self.surname, self.first_name, self.patronymic_name])

@@ -1,10 +1,27 @@
 {% extends 'base_template.html' %}
 {% block 'body' %}
-{% for usr in users %}
-    <p>
-    {% for k,v in usr.items %}
-        <br>{{ k }} {{ v }}</br>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Дата рождения</th>
+        <th>Номер телефона</th>
+        <th>Пол</th>
+        <th>Состояние здоровья</th>
+    </tr>
+    {% for usr in users %}
+        <tr>
+            <td>{{usr.id}}</td>
+            <td>{{usr.surname}}</td>
+            <td>{{usr.first_name}}</td>
+            <td>{{usr.patronymic_name}}</td>
+            <td>{{usr.birth_date}}</td>
+            <td>{{usr.phone_number}}</td>
+            <td>{{usr.gender}}</td>
+            <td>{{usr.health_state}}</td>
+        </tr>
     {% endfor %}
-    </p>
-{% endfor %}
+    </table>
 {% endblock %}

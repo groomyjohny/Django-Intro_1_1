@@ -45,3 +45,12 @@ def user_json(request, uid):
 
 def index_view(request):
     return render(request, 'index.html')
+
+
+def footer_view(request):
+    return render(request, "footer.html")
+
+
+def all_applicants_view(request):
+    users = models.ApplicantModel.objects.all().values()
+    return render(request, "all_applicants.html", context={'users': users})

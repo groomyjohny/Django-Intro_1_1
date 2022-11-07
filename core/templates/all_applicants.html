@@ -1,0 +1,10 @@
+{% extends 'base_template.html' %}
+{% block 'body' %}
+{% for usr in users %}
+    <p>
+    {% for k,v in usr.items %}
+        <br>{{ k }} {{ v }}</br>
+    {% endfor %}
+    </p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% block 'other_tasks' %}
+<p><a href="views/1">Количество происшествий</a></p>
+<p><a href="views/2?id=4">Данные заявителя с ID 4</a></p>
+<p><a href="views/3">Редирект</a></p>
+<p><a href="views/4?test=hello&foo=bar&msg=text">Эхо запроса</a></p>
+<p><a href="views/5?phone=89873333333">Данные заявителя с телефоном 89873333333</a></p>
+{% endblock %}
+
+{% block 'body' %}
+{% endblock %}
+
+{% block 'footer' %}
+    {% include "footer.html" %}
+{% endblock %}

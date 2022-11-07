@@ -9,5 +9,9 @@ urlpatterns = [
     path('views/4', core.views.rq_echo_view),
     path('views/5', core.views.user_data_by_phone_view),
     path('views/6/<int:uid>', core.views.user_json),
+
+    path('all_applicants', core.views.all_applicants_view),
+
     path('', core.views.index_view),
+    path('footer', core.views.footer_view),
     ]

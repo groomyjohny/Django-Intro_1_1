@@ -6,12 +6,9 @@ import core.models
 from core import models
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, View
 from django.http import Http404
 # Create your views here.
-
-class CoreViewException(Exception):
-    pass
 
 
 class AccidentCountView(TemplateView):
@@ -57,10 +54,10 @@ class UserDataByPhoneView(TemplateView):
         return {'user_dict': usr}
 
 
-def user_json(request, uid):
-    usr = models.ApplicantModel.objects.filter(id=uid).values()[0]
-
-    return JsonResponse({'result': usr})
+class UserJsonView(View):
+    def get(self, request, **kwargs):
+        usr = models.ApplicantModel.objects.filter(id=kwargs.get('uid')).values()[0]
+        return JsonResponse({'result': usr})
 
 
 class IndexView(TemplateView):
@@ -93,7 +90,7 @@ class AllAppealsView(ListView):
     def get_context_data(self, **kwargs):
         appeals = self.model.objects.all()
         c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
-        context = super().get_context_data(**kwargs)
 
+        context = super().get_context_data(**kwargs)
         context['avg_service_count'] = c['services__count__avg']
         return context

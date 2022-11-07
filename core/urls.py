@@ -8,7 +8,7 @@ urlpatterns = [
     path('views/redirect_dst', core.views.redirect_dst_view),
     path('views/4', core.views.RequestEchoView.as_view()),
     path('views/5', core.views.UserDataByPhoneView.as_view()),
-    path('views/6/<int:uid>', core.views.user_json),
+    path('views/6/<int:uid>', core.views.UserJsonView.as_view()),
 
     path('all_applicants', core.views.AllApllicantsView.as_view()),
     path('all_applicants_numbered', core.views.AllApllicantsNumberedView.as_view()),

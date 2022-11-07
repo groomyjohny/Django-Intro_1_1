@@ -1,3 +1,13 @@
-{% for k,v in params.items %}
-<p> {{ k }} {{ v }} </p> <!-- TODO: change it to table -->
-{% endfor %}
+<table>
+    <tr>
+        <th>Параметр</th>
+        <th>Значение</th>
+    </tr>
+    {% for k,v in params.items %}
+        <tr>
+            <td>{{k}}</td>
+            <td>{{v}}</td>
+        </tr>
+    {% endfor %}
+</table>
+

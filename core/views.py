@@ -6,7 +6,7 @@ import core.models
 from core import models
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
-from django.views.generic import TemplateView, ListView, View
+from django.views.generic import TemplateView, ListView, View, RedirectView
 from django.http import Http404
 # Create your views here.
 
@@ -30,12 +30,12 @@ class ApplicantPhoneNumberView(TemplateView):
         return {'phone': phone, 'id': a_id}
 
 
-def redirect_src_view(request):
-    return redirect(redirect_dst_view)
+class RedirectDstView(TemplateView):
+    template_name = "redirect_target.html"
 
 
-def redirect_dst_view(request):
-    return render(request, 'redirect_target.html')
+class RedirectSrcView(RedirectView):
+    url = '/core/views/redirect_dst' # TODO: hardcoded redirect
 
 
 class RequestEchoView(TemplateView):

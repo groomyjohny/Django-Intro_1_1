@@ -4,8 +4,8 @@ import core.views
 urlpatterns = [
     path('views/1', core.views.AccidentCountView.as_view()),
     path('views/2', core.views.ApplicantPhoneNumberView.as_view()),
-    path('views/3', core.views.redirect_src_view),
-    path('views/redirect_dst', core.views.redirect_dst_view),
+    path('views/3', core.views.RedirectSrcView.as_view()),
+    path('views/redirect_dst', core.views.RedirectDstView.as_view()),
     path('views/4', core.views.RequestEchoView.as_view()),
     path('views/5', core.views.UserDataByPhoneView.as_view()),
     path('views/6/<int:uid>', core.views.UserJsonView.as_view()),

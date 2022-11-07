@@ -20,9 +20,9 @@
             >
                 <td>{{ forloop.counter }}</td>
                 <td>{{usr.id}}</td>
-                <td>{{usr.surname}}</td>
-                <td>{{usr.first_name}}</td>
-                <td>{{usr.patronymic_name}}</td>
+                <td>{{usr.surname|lower|capfirst}}</td>
+                <td>{{usr.first_name|lower|capfirst}}</td>
+                <td>{{usr.patronymic_name|lower|capfirst}}</td>
                 <td>{{usr.birth_date}}</td>
                 <td>{{usr.phone_number}}</td>
                 <td>{{usr.gender}}</td>

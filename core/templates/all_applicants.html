@@ -14,13 +14,13 @@
         {% for usr in users %}
             <tr>
                 <td>{{usr.id}}</td>
-                <td>{{usr.surname}}</td>
-                <td>{{usr.first_name}}</td>
-                <td>{{usr.patronymic_name}}</td>
-                <td>{{usr.birth_date}}</td>
-                <td>{{usr.phone_number}}</td>
-                <td>{{usr.gender}}</td>
-                <td>{{usr.health_state}}</td>
+                <td>{{usr.surname|default:'-'|default_if_none:'-'|title}}</td>
+                <td>{{usr.first_name|default:'-'|default_if_none:'-'|title}}</td>
+                <td>{{usr.patronymic_name|default:'-'|default_if_none:'-'|title}}</td>
+                <td>{{usr.birth_date|default:'-'|default_if_none:'-'|date:'D j F Y'}}</td>
+                <td>{{usr.phone_number|default:'-'|default_if_none:'-'}}</td>
+                <td>{{usr.gender|default:'-'|default_if_none:'-'}}</td>
+                <td>{{usr.health_state|default:'-'|default_if_none:'-'}}</td>
             </tr>
         {% endfor %}
     </table>

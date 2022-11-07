@@ -4,13 +4,21 @@ from django.http import JsonResponse, HttpResponse
 from core import models
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
+from django.views.generic import TemplateView
+from django.http import Http404
 # Create your views here.
 
-def accident_count_view(request):
-    count = models.AccidentModel.objects.count()
-    if count == 0:
-        return HttpResponse(404)
-    return render(request, "views_1.html", context={'count': count})
+class CoreViewException(Exception):
+    pass
+
+class AccidentCountView(TemplateView):
+    template_name = 'views_1.html'
+
+    def get_context_data(self, **kwargs):
+        count = models.AccidentModel.objects.count()
+        if count == 0:
+            raise Http404
+        return {'count': count}
 
 
 def applicant_phone_number_view(request):

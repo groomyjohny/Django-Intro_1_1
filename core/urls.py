@@ -2,7 +2,7 @@ from django.urls import path
 import core.views
 
 urlpatterns = [
-    path('views/1', core.views.accident_count_view),
+    path('views/1', core.views.AccidentCountView.as_view()),
     path('views/2', core.views.applicant_phone_number_view),
     path('views/3', core.views.redirect_src_view),
     path('views/redirect_dst', core.views.redirect_dst_view),

@@ -76,19 +76,14 @@ class AllApllicantsView(ListView):
     template_name = 'all_applicants.html'
 
 
-def all_applicants_view(request):
-    users = models.ApplicantModel.objects.all()
-    return render(request, "all_applicants.html", context={'users': users})
+class AllApllicantsNumberedView(ListView):
+    model = core.models.ApplicantModel
+    template_name = 'all_applicants_numbered.html'
 
 
-def all_applicants_numbered_view(request):
-    users = models.ApplicantModel.objects.all()
-    return render(request, 'all_applicants_numbered.html', context={'users': users})
-
-
-def all_accidents_view(request):
-    accidents = models.AccidentModel.objects.all()
-    return render(request, "all_accidents.html", context={'accidents': accidents})
+class AllAccidentsView(ListView):
+    model = core.models.AccidentModel
+    template_name = 'all_accidents.html'
 
 
 def all_appeals_view(request):

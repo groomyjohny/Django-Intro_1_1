@@ -12,7 +12,7 @@
             <th>Пол</th>
             <th>Состояние здоровья</th>
         </tr>
-        {% for usr in users %}
+        {% for usr in object_list %}
             <tr
                     {% if forloop.first %} style="color: #ff0000"
                     {% elif forloop.last %} style="color: #0000ff"

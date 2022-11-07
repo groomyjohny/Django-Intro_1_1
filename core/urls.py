@@ -11,8 +11,8 @@ urlpatterns = [
     path('views/6/<int:uid>', core.views.user_json),
 
     path('all_applicants', core.views.AllApllicantsView.as_view()),
-    path('all_applicants_numbered', core.views.all_applicants_numbered_view),
-    path('all_accidents', core.views.all_accidents_view),
+    path('all_applicants_numbered', core.views.AllApllicantsNumberedView.as_view()),
+    path('all_accidents', core.views.AllAccidentsView.as_view()),
     path('all_appeals', core.views.all_appeals_view),
 
     path('', core.views.IndexView.as_view()),

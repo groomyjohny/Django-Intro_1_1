@@ -13,6 +13,7 @@ urlpatterns = [
     path('all_applicants', core.views.all_applicants_view),
     path('all_applicants_numbered', core.views.all_applicants_numbered_view),
     path('all_accidents', core.views.all_accidents_view),
+    path('all_appeals', core.views.all_appeals_view),
 
     path('', core.views.index_view),
     path('footer', core.views.footer_view),

@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse, HttpResponse
 from core import models
 from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Avg, Count
 # Create your views here.
 
 def accident_count_view(request):
@@ -59,6 +60,14 @@ def all_applicants_view(request):
 def all_applicants_numbered_view(request):
     users = models.ApplicantModel.objects.all()
     return render(request, 'all_applicants_numbered.html', context={'users': users})
+
+
 def all_accidents_view(request):
     accidents = models.AccidentModel.objects.all()
     return render(request, "all_accidents.html", context={'accidents': accidents})
+
+
+def all_appeals_view(request):
+    appeals = models.AppealModel.objects.all()
+    c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
+    return render(request, "all_appeals.html", context={'appeals': appeals, 'avg_service_count': c['services__count__avg']})

@@ -52,5 +52,13 @@ def footer_view(request):
 
 
 def all_applicants_view(request):
-    users = models.ApplicantModel.objects.all().values()
+    users = models.ApplicantModel.objects.all()
     return render(request, "all_applicants.html", context={'users': users})
+
+
+def all_applicants_numbered_view(request):
+    users = models.ApplicantModel.objects.all()
+    return render(request, 'all_applicants_numbered.html', context={'users': users})
+def all_accidents_view(request):
+    accidents = models.AccidentModel.objects.all()
+    return render(request, "all_accidents.html", context={'accidents': accidents})

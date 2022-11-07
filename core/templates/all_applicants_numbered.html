@@ -2,6 +2,7 @@
 {% block 'body' %}
     <table>
         <tr>
+            <th>№</th>
             <th>ID</th>
             <th>Фамилия</th>
             <th>Имя</th>
@@ -12,7 +13,12 @@
             <th>Состояние здоровья</th>
         </tr>
         {% for usr in users %}
-            <tr>
+            <tr
+                    {% if forloop.first %} style="color: #ff0000"
+                    {% elif forloop.last %} style="color: #0000ff"
+                    {% endif %}
+            >
+                <td>{{ forloop.counter }}</td>
                 <td>{{usr.id}}</td>
                 <td>{{usr.surname}}</td>
                 <td>{{usr.first_name}}</td>

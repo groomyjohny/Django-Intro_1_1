@@ -1,15 +1,18 @@
 import json
 
 from django.http import JsonResponse, HttpResponse
+
+import core.models
 from core import models
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.http import Http404
 # Create your views here.
 
 class CoreViewException(Exception):
     pass
+
 
 class AccidentCountView(TemplateView):
     template_name = 'views_1.html'
@@ -21,10 +24,13 @@ class AccidentCountView(TemplateView):
         return {'count': count}
 
 
-def applicant_phone_number_view(request):
-    a_id = request.GET['id']
-    phone = get_object_or_404(models.ApplicantModel, id=a_id).phone_number
-    return render(request, "views_2.html", context={'phone': phone, 'id': a_id})
+class ApplicantPhoneNumberView(TemplateView):
+    template_name = 'views_2.html'
+
+    def get_context_data(self, **kwargs):
+        a_id = self.request.GET['id']
+        phone = get_object_or_404(models.ApplicantModel, id=a_id).phone_number
+        return {'phone': phone, 'id': a_id}
 
 
 def redirect_src_view(request):
@@ -35,15 +41,20 @@ def redirect_dst_view(request):
     return render(request, 'redirect_target.html')
 
 
-def rq_echo_view(request):
-    return render(request, 'views_4.html', context={'params': request.GET})
+class RequestEchoView(TemplateView):
+    template_name = 'views_4.html'
+
+    def get_context_data(self, **kwargs):
+        return {'params': self.request.GET}
 
 
-def user_data_by_phone_view(request):
-    phone = request.GET['phone']
-    usr = models.ApplicantModel.objects.filter(phone_number=phone).values()[0]
+class UserDataByPhoneView(TemplateView):
+    template_name = 'views_5.html'
 
-    return render(request, 'views_5.html', context={'user_dict': usr}) # instead of just passing dict we can form it ourselves
+    def get_context_data(self, **kwargs):
+        phone = self.request.GET['phone']
+        usr = models.ApplicantModel.objects.filter(phone_number=phone).values()[0]
+        return {'user_dict': usr}
 
 
 def user_json(request, uid):
@@ -52,12 +63,17 @@ def user_json(request, uid):
     return JsonResponse({'result': usr})
 
 
-def index_view(request):
-    return render(request, 'index.html')
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
-def footer_view(request):
-    return render(request, "footer.html")
+class FooterView(TemplateView):
+    template_name = 'footer.html'
+
+
+class AllApllicantsView(ListView):
+    model = core.models.ApplicantModel
+    template_name = 'all_applicants.html'
 
 
 def all_applicants_view(request):

@@ -8,5 +8,6 @@ urlpatterns = [
     path('views/redirect_dst', core.views.redirect_dst_view),
     path('views/4', core.views.rq_echo_view),
     path('views/5', core.views.user_data_by_phone_view),
-    path('views/6/<int:uid>', core.views.user_json)
+    path('views/6/<int:uid>', core.views.user_json),
+    path('', core.views.index_view),
     ]

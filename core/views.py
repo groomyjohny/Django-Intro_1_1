@@ -19,7 +19,7 @@ def applicant_phone_number_view(request):
 
 
 def redirect_src_view(request):
-    return redirect('/views/redirect_dst')
+    return redirect(redirect_dst_view)
 
 
 def redirect_dst_view(request):
@@ -27,7 +27,7 @@ def redirect_dst_view(request):
 
 
 def rq_echo_view(request):
-    return render(request, 'views_4.html', context={'params': request.GET}) # TODO: remake!!!
+    return render(request, 'views_4.html', context={'params': request.GET})
 
 
 def user_data_by_phone_view(request):
@@ -40,4 +40,8 @@ def user_data_by_phone_view(request):
 def user_json(request, uid):
     usr = models.ApplicantModel.objects.filter(id=uid).values()[0]
 
-    return JsonResponse({'result' : usr})
+    return JsonResponse({'result': usr})
+
+
+def index_view(request):
+    return render(request, 'index.html')

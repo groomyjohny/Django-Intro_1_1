@@ -13,7 +13,7 @@
             <th>Описание</th>
         </tr>
 
-        {% for appeal in appeals %}
+        {% for appeal in object_list %}
         <tr>
             <td>{{appeal.id}}</td>
             <td>{{appeal.date|date:'d.m.Y H:i:s'}}</td>

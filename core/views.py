@@ -86,7 +86,14 @@ class AllAccidentsView(ListView):
     template_name = 'all_accidents.html'
 
 
-def all_appeals_view(request):
-    appeals = models.AppealModel.objects.all()
-    c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
-    return render(request, "all_appeals.html", context={'appeals': appeals, 'avg_service_count': c['services__count__avg']})
+class AllAppealsView(ListView):
+    model = models.AppealModel
+    template_name = 'all_appeals.html'
+
+    def get_context_data(self, **kwargs):
+        appeals = self.model.objects.all()
+        c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
+        context = super().get_context_data(**kwargs)
+
+        context['avg_service_count'] = c['services__count__avg']
+        return context

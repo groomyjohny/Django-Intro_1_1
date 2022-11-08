@@ -1,3 +1,5 @@
+Tested in manage.py shell
+
 Queryset requests:
 Saving:
 1)

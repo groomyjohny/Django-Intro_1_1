@@ -1,0 +1,28 @@
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Фамилия</th>
+        <th>Имя</th>
+        <th>Отчество</th>
+        <th>Дата рождения</th>
+        <th>Номер телефона</th>
+        <th>Пол</th>
+        <th>Состояние здоровья</th>
+    </tr>
+    {% for usr in object_list %}
+        <tr
+            {% if forloop.first %} class="first-applicant"
+            {% elif forloop.last %} class="last-applicant"
+            {% endif %}
+        >
+            <td>{{usr.id}}</td>
+            <td>{{usr.surname|default:'-'|default_if_none:'-'|title}}</td>
+            <td>{{usr.first_name|default:'-'|default_if_none:'-'|title}}</td>
+            <td>{{usr.patronymic_name|default:'-'|default_if_none:'-'|title}}</td>
+            <td>{{usr.birth_date|default:'-'|default_if_none:'-'|date:'D j F Y'}}</td>
+            <td>{{usr.phone_number|default:'-'|default_if_none:'-'}}</td>
+            <td>{{usr.gender|default:'-'|default_if_none:'-'}}</td>
+            <td>{{usr.health_state|default:'-'|default_if_none:'-'}}</td>
+        </tr>
+    {% endfor %}
+</table>

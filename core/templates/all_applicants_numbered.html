@@ -1,33 +1,13 @@
 {% extends 'base_template.html' %}
 {% block 'body' %}
-    <table>
-        <tr>
-            <th>№</th>
-            <th>ID</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Дата рождения</th>
-            <th>Номер телефона</th>
-            <th>Пол</th>
-            <th>Состояние здоровья</th>
-        </tr>
-        {% for usr in object_list %}
-            <tr
-                    {% if forloop.first %} style="color: #ff0000"
-                    {% elif forloop.last %} style="color: #0000ff"
-                    {% endif %}
-            >
-                <td>{{ forloop.counter }}</td>
-                <td>{{usr.id}}</td>
-                <td>{{usr.surname|lower|capfirst}}</td>
-                <td>{{usr.first_name|lower|capfirst}}</td>
-                <td>{{usr.patronymic_name|lower|capfirst}}</td>
-                <td>{{usr.birth_date}}</td>
-                <td>{{usr.phone_number}}</td>
-                <td>{{usr.gender}}</td>
-                <td>{{usr.health_state}}</td>
-            </tr>
-        {% endfor %}
-    </table>
+    <style>
+    .first-applicant {
+        color: #ff0000;
+    }
+
+    .last-applicant {
+        color: #0000ff;
+    }
+</style>
+    {% include 'applicant_render.html' %}
 {% endblock %}

@@ -1,31 +1,6 @@
 <h1>Поиск по заявлениям</h1>
 {% include 'base_filter.html' %}
 
-<table> <!-- TODO: this is duplicate code from all_appeals.html -->
-        <tr>
-            <th>ID</th>
-            <th>Дата</th>
-            <th>Как давно?</th>
-            <th>Номер</th>
-            <th>Номер карточки</th>
-            <th>Заявитель</th>
-            <th>Задействованные службы</th>
-            <th>Статус</th>
-            <th>Описание</th>
-        </tr>
-
-        {% for appeal in object_list %}
-        <tr>
-            <td>{{appeal.id}}</td>
-            <td>{{appeal.date|date:'d.m.Y H:i:s'}}</td>
-            <td>{{appeal.date|timesince}}</td>
-            <td>{{appeal.number}}</td>
-            <td>{{appeal.card_number|default:'-'|default_if_none:'-'}}</td>
-            <td>{{appeal.applicant}}</td>
-            <td>{{appeal.services.all|default:'-'|default_if_none:'-'|join:', '|upper}}</td>
-            <td>{{appeal.status}}</td>
-            <td>{{appeal.description|default:'-'|default_if_none:'-'}}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
+{% with filter.qs as object_list %}
+    {% include 'appeal_render.html' %}
+{% endwith %}

@@ -1,6 +1,6 @@
 <h1>Поиск заявителей по активности</h1>
 {% include 'base_filter.html' %}
 
-{% for i in filter.qs %}
-    {{ i }} <br/>
-{% endfor %}
+{% with filter.qs as object_list %}
+    {% include 'applicant_render.html' %}
+{% endwith %}

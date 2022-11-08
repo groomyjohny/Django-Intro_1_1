@@ -1,0 +1,6 @@
+<h1>Поиск по заявителям</h1>
+{% include 'base_filter.html' %}
+
+{% for obj in filter.qs %}
+    {{obj}} <br/>
+{% endfor %}

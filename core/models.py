@@ -38,6 +38,7 @@ class ApplicantModel(models.Model):
         except TypeError:
             return f'(Ошибка при получении описания экземляра {self.__class__.__name__})'
 
+    #@property
     def full_name(self):
         try:
             return ' '.join([self.surname, self.first_name, self.patronymic_name])

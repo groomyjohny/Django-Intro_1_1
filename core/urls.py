@@ -24,6 +24,9 @@ urlpatterns = [
     path('edit_applicant/<int:pk>', core.views.EditApplicantView.as_view()),
     path('edit_appeal/<int:pk>', core.views.EditAppealView.as_view()),
 
+    path('filter_applicant', core.views.FilterApplicantView.as_view()),
+    path('filter_appeal', core.views.FilterAppealView.as_view()),
+
     path('', core.views.IndexView.as_view()),
     path('footer', core.views.FooterView.as_view()),
     path('success', core.views.SuccessView.as_view()),

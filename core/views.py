@@ -1,13 +1,14 @@
 import json
 
 import django.urls
+import django_filters.views
 from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
 from django.views.generic import *
 from django.core.exceptions import ObjectDoesNotExist
 
-from core import models, forms
+from core import models, forms, filters
 # Create your views here.
 
 
@@ -138,6 +139,18 @@ class EditApplicantView(CoreUpdateView):
 class EditAppealView(CoreUpdateView):
     template_name = 'edit_appeal.html'
     model = models.AppealModel
+
+
+class FilterApplicantView(django_filters.views.FilterView):
+    model = models.ApplicantModel
+    template_name = 'filter_applicant.html'
+    filterset_class = filters.ApplicantFilter
+
+
+class FilterAppealView(django_filters.views.FilterView):
+    model = models.AppealModel
+    template_name = 'filter_appeal.html'
+    filterset_class = filters.AppealFilter
 
 
 class SuccessView(TemplateView):

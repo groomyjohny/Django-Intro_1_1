@@ -35,7 +35,7 @@ class RedirectDstView(TemplateView):
 
 
 class RedirectSrcView(RedirectView):
-    url = '/core/views/redirect_dst' # TODO: hardcoded redirect
+    url = '/core/views/redirect_dst'  # TODO: hardcoded redirect
 
 
 class RequestEchoView(TemplateView):
@@ -118,3 +118,27 @@ class AddAccidentView(CreateView):
     template_name = 'add_accident.html'
     form_class = forms.AccidentForm
     success_url = 'add_accident'
+
+
+class CoreUpdateView(UpdateView):
+    fields = '__all__'
+    success_url = '/core/success'
+
+
+class EditServiceView(CoreUpdateView):
+    template_name = 'edit_service.html'
+    model = models.EmergencyServiceModel
+
+
+class EditApplicantView(CoreUpdateView):
+    template_name = 'edit_applicant.html'
+    model = models.ApplicantModel
+
+
+class EditAppealView(CoreUpdateView):
+    template_name = 'edit_appeal.html'
+    model = models.AppealModel
+
+
+class SuccessView(TemplateView):
+    template_name = 'success.html'

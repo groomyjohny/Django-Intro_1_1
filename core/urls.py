@@ -20,8 +20,11 @@ urlpatterns = [
     path('add_appeal', core.views.AddAppealView.as_view()),
     path('add_accident', core.views.AddAccidentView.as_view()),
 
-    #path('edit_service/<int:id>', core.views.EditServiceView.as_view()),
+    path('edit_service/<int:pk>', core.views.EditServiceView.as_view()),
+    path('edit_applicant/<int:pk>', core.views.EditApplicantView.as_view()),
+    path('edit_appeal/<int:pk>', core.views.EditAppealView.as_view()),
 
     path('', core.views.IndexView.as_view()),
     path('footer', core.views.FooterView.as_view()),
+    path('success', core.views.SuccessView.as_view()),
     ]

@@ -26,6 +26,7 @@ urlpatterns = [
 
     path('filter_applicant', core.views.FilterApplicantView.as_view()),
     path('filter_appeal', core.views.FilterAppealView.as_view()),
+    path('filter_applicant_name', core.views.FilterApplicantNameView.as_view()),
 
     path('', core.views.IndexView.as_view()),
     path('footer', core.views.FooterView.as_view()),

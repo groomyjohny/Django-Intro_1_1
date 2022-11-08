@@ -2,14 +2,12 @@ import datetime
 
 import django_filters
 from core import models
-from django.db.models import Q
+from django.db.models import Q, Count
 
 
 class ApplicantFilter(django_filters.FilterSet):
-    applicant_full_name_contains = django_filters.CharFilter(method='applicant_full_name_contains_filter',
-                                                          label="ФИО заявителя содержит")
-    applicant_full_name_exact = django_filters.CharFilter(method='applicant_full_name_exact_filter',
-                                                          label="ФИО заявителя (точное)")
+    applicant_full_name_contains = django_filters.CharFilter(method='applicant_full_name_contains_filter', label="ФИО заявителя содержит")
+    applicant_full_name_exact = django_filters.CharFilter(method='applicant_full_name_exact_filter', label="ФИО заявителя (точное)")
     birth_year_exact = django_filters.CharFilter(method='birth_year_exact_filter', label='Год рождения', max_length=4)
 
     def applicant_full_name_contains_filter(self, queryset, name, value):
@@ -77,3 +75,29 @@ class AppealFilter(django_filters.FilterSet):
         #    'services__service_code': ['exact', 'contains'],
         #    #'applicant__full_name': ['exact', 'contains'],
         #}
+
+
+class ApplicantNameFilter(django_filters.FilterSet):
+    name_contains = django_filters.CharFilter(method='name_contains_filter', label="ФИО заявителя содержит")
+    name_exact = django_filters.CharFilter(method='name_exacts_filter', label="ФИО заявителя (точное)")
+    appeals_count_range = django_filters.RangeFilter(method='appeals_count', label='Количество обращений')
+
+    def name_contains_filter(self, queryset, name, value):
+        v = queryset.filter(
+            Q(surname__icontains=value) |
+            Q(first_name__icontains=value) |
+            Q(patronymic_name__icontains=value)
+        )
+        return v
+
+    def name_contains_exact(self, queryset, name, value):
+        return queryset.filter(
+            Q(surname__exact=value) |
+            Q(first_name__exact=value) |
+            Q(patronymic_name__exact=value)
+        )
+
+
+    def appeals_count(self, queryset, name, value):
+        qs = queryset.annotate(appeals_count=Count('appeals'))
+        return qs.filter(appeals_count__range=(value.start, value.stop))

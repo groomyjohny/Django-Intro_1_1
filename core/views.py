@@ -153,5 +153,11 @@ class FilterAppealView(django_filters.views.FilterView):
     filterset_class = filters.AppealFilter
 
 
+class FilterApplicantNameView(django_filters.views.FilterView):
+    model = models.ApplicantModel
+    template_name = 'filter_applicant_name.html'
+    filterset_class = filters.ApplicantNameFilter
+
+
 class SuccessView(TemplateView):
     template_name = 'success.html'

@@ -22,8 +22,8 @@ class ApplicantModel(models.Model):
     class GenderChoices(models.TextChoices):
         M = 'М'  # строка 'М' - русская, поле - латинское
         F = 'Ж'
-    first_name = models.CharField("Имя", max_length=40, null=True)
     surname = models.CharField("Фамилия", max_length=40, null=True)
+    first_name = models.CharField("Имя", max_length=40, null=True)
     patronymic_name = models.CharField("Отчество", max_length=40, null=True)
     birth_date = models.DateField('Дата рождения', null=True)
     phone_number = models.CharField('Номер телефона', blank=True, null=True, max_length=20)

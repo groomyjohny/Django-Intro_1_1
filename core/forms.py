@@ -7,6 +7,9 @@ class ServiceForm(forms.ModelForm):
     class Meta:
         model = models.EmergencyServiceModel
         fields = '__all__'
+        help_texts = {
+            'service_code': 'Здесь должен быть help-text, вот он',
+        }
 
 
 class ApplicantForm(forms.ModelForm):
@@ -21,4 +24,16 @@ class AppealForm(forms.ModelForm):
         fields = '__all__'
         help_texts = {
             'services': 'Нажмите и держите клавишу CTRL для выбора нескольких служб',
+        }
+
+
+class AccidentForm(forms.ModelForm):
+    class Meta:
+        model = models.AccidentModel
+        fields = '__all__'
+        help_texts = {
+            'services': 'Нажмите и держите клавишу CTRL для выбора нескольких служб',
+        }
+        labels = {
+            'services': 'Задействованные службы',
         }

@@ -4,6 +4,7 @@ from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
 from django.views.generic import TemplateView, ListView, View, RedirectView
+from django.core.exceptions import ObjectDoesNotExist
 
 from core import models, forms
 # Create your views here.
@@ -95,33 +96,57 @@ class AllAppealsView(ListView):
 
 
 class CoreAddFormBase(TemplateView):
-    form = None
+    form_type = None
     """Форма, которую будет обрабатывать эта View"""
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = self.form
+        context['form'] = self.form_type
         return context
 
     def post(self, request):
-        form = self.form(request.POST)
+        form = self.form_type(request.POST)
         status_code = 400
         if form.is_valid():
             form.save()
             status_code = 201
-        return render(request, self.template_name, status=status_code, context={'form': form})
+            form = self.form_type
+        return render(request, self.template_name, status=status_code, context={'form': form}) # form will be cleared if everything is OK, or sent back to user if not
+
+
+class CoreEditFormBase(CoreAddFormBase):
+    model = None
+    def get(self, request, id):
+        #id = int(request.GET['id'])
+        try:
+            obj = self.model.objects.get(id=id)
+        except ObjectDoesNotExist:
+            return HttpResponse(f'Объекта с запрашиваемым ID ({id}) не существует', status=404)
+        my_form = self.form_type(instance=obj)
+        return render(request, self.template_name, status=200, context={'form': my_form})
 
 
 class AddServiceView(CoreAddFormBase):
     template_name = 'add_service.html'
-    form = forms.ServiceForm
+    form_type = forms.ServiceForm
 
 
 class AddApplicantView(CoreAddFormBase):
     template_name = 'add_applicant.html'
-    form = forms.ApplicantForm
+    form_type = forms.ApplicantForm
 
 
 class AddAppealView(CoreAddFormBase):
     template_name = 'add_appeal.html'
-    form = forms.AppealForm
+    form_type = forms.AppealForm
+
+
+class AddAccidentView(CoreAddFormBase):
+    template_name = 'add_accident.html'
+    form_type = forms.AccidentForm
+
+
+class EditServiceView(CoreEditFormBase):
+    template_name = 'edit_service.html'
+    form_type = forms.ServiceForm
+    model = models.EmergencyServiceModel

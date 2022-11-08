@@ -9,6 +9,7 @@ from core import models
 class EmergencyServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'service_code', 'phone_number')
     empty_value_display = '(нет значения)'
+    search_fields = ['name']
 
 
 @admin.register(core.models.ApplicantModel)

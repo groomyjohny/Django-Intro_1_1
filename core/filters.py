@@ -44,10 +44,36 @@ class ApplicantFilter(django_filters.FilterSet):
 
 
 class AppealFilter(django_filters.FilterSet):
+    applicant_full_name_contains = django_filters.CharFilter(method='applicant_full_name_contains_filter', label="ФИО заявителя содержит")
+    applicant_full_name_exact = django_filters.CharFilter(method='applicant_full_name_exact_filter', label="ФИО заявителя (точное)")
+    service_code_contains = django_filters.CharFilter(method='service_code_contains_filter', label='Код службы содержит')
+    service_code_exact = django_filters.CharFilter(method='service_code_exact_filter', label='Код службы (точный)')
+
+    def applicant_full_name_contains_filter(self, queryset, name, value):
+        return queryset.filter(
+            Q(applicant__surname__icontains=value) |
+            Q(applicant__first_name__icontains=value) |
+            Q(applicant__patronymic_name__icontains=value)
+        )
+
+    def applicant_full_name_exact_filter(self, queryset, name, value):
+        return queryset.filter(
+            Q(applicant__surname__exact=value) |
+            Q(applicant__first_name__exact=value) |
+            Q(applicant__patronymic_name__exact=value)
+        )
+
+    def service_code_contains_filter(self, queryset, name, value):
+        return queryset.filter(services__service_code__icontains=value).distinct()
+
+    def service_code_exact_filter(self, queryset, name, value):
+        return queryset.filter(services__service_code__exact=value).distinct()
+
     class Meta:
         model = models.AppealModel
-        fields = {
-            'status': ['exact'],
-            'services__service_code': ['exact', 'contains'],
-            #'applicant__full_name': ['exact', 'contains'],
-        }
+        fields = ['status', 'service_code_contains', 'service_code_exact', 'applicant_full_name_contains', 'applicant_full_name_exact']
+        #fields = {
+        #    'status': ['exact'],
+        #    'services__service_code': ['exact', 'contains'],
+        #    #'applicant__full_name': ['exact', 'contains'],
+        #}

@@ -1,13 +1,11 @@
 import json
 
-from django.http import JsonResponse, HttpResponse
-
-import core.models
-from core import models
+from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
 from django.views.generic import TemplateView, ListView, View, RedirectView
-from django.http import Http404
+
+from core import models, forms
 # Create your views here.
 
 
@@ -69,17 +67,17 @@ class FooterView(TemplateView):
 
 
 class AllApllicantsView(ListView):
-    model = core.models.ApplicantModel
+    model = models.ApplicantModel
     template_name = 'all_applicants.html'
 
 
 class AllApllicantsNumberedView(ListView):
-    model = core.models.ApplicantModel
+    model = models.ApplicantModel
     template_name = 'all_applicants_numbered.html'
 
 
 class AllAccidentsView(ListView):
-    model = core.models.AccidentModel
+    model = models.AccidentModel
     template_name = 'all_accidents.html'
 
 
@@ -94,3 +92,26 @@ class AllAppealsView(ListView):
         context = super().get_context_data(**kwargs)
         context['avg_service_count'] = c['services__count__avg']
         return context
+
+
+class CoreAddFormBase(TemplateView):
+    form = None
+    """Форма, которую будет обрабатывать эта View"""
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = self.form
+        return context
+
+    def post(self, request):
+        form = self.form(request.POST)
+        status_code = 400
+        if form.is_valid():
+            form.save()
+            status_code = 201
+        return render(request, self.template_name, status=status_code, context={'form': form})
+
+
+class AddServiceView(CoreAddFormBase):
+    template_name = 'add_service.html'
+    form = forms.ServiceForm

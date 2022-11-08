@@ -6,4 +6,4 @@ from core import models
 class ServiceForm(forms.ModelForm):
     class Meta:
         model = models.EmergencyServiceModel
-        #exclude = [ 'id' ]
+        fields = '__all__'

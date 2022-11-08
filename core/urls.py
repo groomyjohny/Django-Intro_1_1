@@ -15,6 +15,8 @@ urlpatterns = [
     path('all_accidents', core.views.AllAccidentsView.as_view()),
     path('all_appeals', core.views.AllAppealsView.as_view()),
 
+    path('add_service', core.views.AddServiceView.as_view()),
+
     path('', core.views.IndexView.as_view()),
     path('footer', core.views.FooterView.as_view()),
     ]

@@ -115,3 +115,13 @@ class CoreAddFormBase(TemplateView):
 class AddServiceView(CoreAddFormBase):
     template_name = 'add_service.html'
     form = forms.ServiceForm
+
+
+class AddApplicantView(CoreAddFormBase):
+    template_name = 'add_applicant.html'
+    form = forms.ApplicantForm
+
+
+class AddAppealView(CoreAddFormBase):
+    template_name = 'add_appeal.html'
+    form = forms.AppealForm

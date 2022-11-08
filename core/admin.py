@@ -29,3 +29,5 @@ class AppealAdmin(admin.ModelAdmin):
 class AccidentAdmin(admin.ModelAdmin):
     list_display = ('number', 'addition_datetime', 'injured_count', 'dont_call', 'services_string')
     empty_value_display = '(нет значения)'
+    ordering = ['-addition_datetime']
+

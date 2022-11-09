@@ -52,7 +52,7 @@ class UserDataByPhoneView(TemplateView):
     def get_context_data(self, **kwargs):
         phone = self.request.GET['phone']
         usr = models.ApplicantModel.objects.filter(phone_number=phone).values()[0]
-        return {'user_dict': usr}
+        return {'user_in_a_list': [usr]}
 
 
 class UserJsonView(View):

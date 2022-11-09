@@ -1,0 +1,39 @@
+<div class="flex-shrink-0 p-3 bg-white">
+    <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#old-tasks-collapse" aria-expanded="false">Старые задачи</button>
+            <div class="collapse show" id="old-tasks-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="views/1">Количество происшествий</a></li>
+                    <li><a href="views/2?id=4">Данные заявителя с ID 4</a></li>
+                    <li><a href="views/3">Редирект</a></li>
+                    <li><a href="views/4?test=hello&foo=bar&msg=text">Эхо запроса</a></li>
+                    <li><a href="views/5?phone=89873333333">Данные заявителя с телефоном 89873333333</a></li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#new-tasks-collapse" aria-expanded="false">Новые задачи</button>
+            <div class="collapse show" id="new-tasks-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="all_accidents">Данные о происшествиях</a></li>
+                    <li><a href="all_appeals">Данные о заявлениях</a></li>
+                    <li><a href="all_applicants">Данные о заявителях</a></li>
+                    <li><a href="all_applicants_numbered">Данные о заявителях (пронумерованных)</a></li>
+                </ul>
+            </div>
+        </li>
+
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#filter-tasks-collapse" aria-expanded="false">Поиск</button>
+            <div class="collapse show" id="filter-tasks-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="filter_applicant">Поиск по заявителям</a></li>
+                    <li><a href="filter_appeal">Поиск по заявлениям</a></li>
+                    <li><a href="filter_applicant_name">Поиск заявителей по активности</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>

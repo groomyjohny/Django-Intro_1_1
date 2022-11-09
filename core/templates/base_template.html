@@ -1,0 +1,35 @@
+<html>
+    <head>
+        {% block 'styles' %}
+        {% endblock %}
+    </head>
+
+    <body>
+        {% block 'other_tasks' %}
+        <div class="old-tasks">
+            <p><a href="views/1">Количество происшествий</a></p>
+            <p><a href="views/2?id=4">Данные заявителя с ID 4</a></p>
+            <p><a href="views/3">Редирект</a></p>
+            <p><a href="views/4?test=hello&foo=bar&msg=text">Эхо запроса</a></p>
+            <p><a href="views/5?phone=89873333333">Данные заявителя с телефоном 89873333333</a></p>
+        </div>
+        <div class="new-tasks">
+            <p><a href="all_accidents">Данные о происшествиях</a></p>
+            <p><a href="all_appeals">Данные о заявлениях</a></p>
+            <p><a href="all_applicants">Данные о заявителях</a></p>
+            <p><a href="all_applicants_numbered">Данные о заявителях (пронумерованных)</a></p>
+        </div>
+        {% endblock %}
+
+        <div class="head-spacer"></div>
+
+        {% block 'body' %}
+        {% endblock %}
+
+        <div class="footer-spacer"></div>
+
+        {% block 'footer' %}
+            {% include "footer.html" %}
+        {% endblock %}
+    </body>
+</html>

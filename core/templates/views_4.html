@@ -1,0 +1,13 @@
+<table>
+    <tr>
+        <th>Параметр</th>
+        <th>Значение</th>
+    </tr>
+    {% for k,v in params.items %}
+        <tr>
+            <td>{{k}}</td>
+            <td>{{v}}</td>
+        </tr>
+    {% endfor %}
+</table>
+

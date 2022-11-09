@@ -1,13 +1,14 @@
 import json
 
-from django.http import JsonResponse, HttpResponse
-
-import core.models
-from core import models
+import django.urls
+import django_filters.views
+from django.http import JsonResponse, HttpResponse, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
-from django.views.generic import TemplateView, ListView, View, RedirectView
-from django.http import Http404
+from django.views.generic import *
+from django.core.exceptions import ObjectDoesNotExist
+
+from core import models, forms, filters
 # Create your views here.
 
 
@@ -35,7 +36,7 @@ class RedirectDstView(TemplateView):
 
 
 class RedirectSrcView(RedirectView):
-    url = '/core/views/redirect_dst' # TODO: hardcoded redirect
+    url = '/core/views/redirect_dst'  # TODO: hardcoded redirect
 
 
 class RequestEchoView(TemplateView):
@@ -69,17 +70,17 @@ class FooterView(TemplateView):
 
 
 class AllApllicantsView(ListView):
-    model = core.models.ApplicantModel
+    model = models.ApplicantModel
     template_name = 'all_applicants.html'
 
 
 class AllApllicantsNumberedView(ListView):
-    model = core.models.ApplicantModel
+    model = models.ApplicantModel
     template_name = 'all_applicants_numbered.html'
 
 
 class AllAccidentsView(ListView):
-    model = core.models.AccidentModel
+    model = models.AccidentModel
     template_name = 'all_accidents.html'
 
 
@@ -94,3 +95,69 @@ class AllAppealsView(ListView):
         context = super().get_context_data(**kwargs)
         context['avg_service_count'] = c['services__count__avg']
         return context
+
+
+class AddServiceView(CreateView):
+    template_name = 'add_service.html'
+    form_class = forms.ServiceForm
+    success_url = 'add_service'
+
+
+class AddApplicantView(CreateView):
+    template_name = 'add_applicant.html'
+    form_class = forms.ApplicantForm
+    success_url = 'add_applicant'
+
+
+class AddAppealView(CreateView):
+    template_name = 'add_appeal.html'
+    form_class = forms.AppealForm
+    success_url = 'add_appeal'
+
+
+class AddAccidentView(CreateView):
+    template_name = 'add_accident.html'
+    form_class = forms.AccidentForm
+    success_url = 'add_accident'
+
+
+class CoreUpdateView(UpdateView):
+    fields = '__all__'
+    success_url = '/core/success'
+
+
+class EditServiceView(CoreUpdateView):
+    template_name = 'edit_service.html'
+    model = models.EmergencyServiceModel
+
+
+class EditApplicantView(CoreUpdateView):
+    template_name = 'edit_applicant.html'
+    model = models.ApplicantModel
+
+
+class EditAppealView(CoreUpdateView):
+    template_name = 'edit_appeal.html'
+    model = models.AppealModel
+
+
+class FilterApplicantView(django_filters.views.FilterView):
+    model = models.ApplicantModel
+    template_name = 'filter_applicant.html'
+    filterset_class = filters.ApplicantFilter
+
+
+class FilterAppealView(django_filters.views.FilterView):
+    model = models.AppealModel
+    template_name = 'filter_appeal.html'
+    filterset_class = filters.AppealFilter
+
+
+class FilterApplicantNameView(django_filters.views.FilterView):
+    model = models.ApplicantModel
+    template_name = 'filter_applicant_name.html'
+    filterset_class = filters.ApplicantNameFilter
+
+
+class SuccessView(TemplateView):
+    template_name = 'success.html'

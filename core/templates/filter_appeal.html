@@ -1,0 +1,6 @@
+<h1>Поиск по заявлениям</h1>
+{% include 'base_filter.html' %}
+
+{% with filter.qs as object_list %}
+    {% include 'appeal_render.html' %}
+{% endwith %}

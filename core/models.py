@@ -5,7 +5,7 @@ import datetime
 class EmergencyServiceModel(models.Model):
     """Модель экстренной службы"""
     name = models.CharField('Название', max_length=128)
-    service_code = models.PositiveIntegerField('Код службы')
+    service_code = models.CharField('Код службы', max_length=16)
     phone_number = models.CharField('Номер телефона', max_length=16)
 
     def __str__(self):
@@ -22,24 +22,50 @@ class ApplicantModel(models.Model):
     class GenderChoices(models.TextChoices):
         M = 'М'  # строка 'М' - русская, поле - латинское
         F = 'Ж'
-    full_name = models.CharField('ФИО', max_length=128)
-    birth_date = models.DateField('Дата рождения')
-    phone_number = models.BigIntegerField('Номер телефона', blank=True)
+    first_name = models.CharField("Имя", max_length=40, null=True)
+    surname = models.CharField("Фамилия", max_length=40, null=True)
+    patronymic_name = models.CharField("Отчество", max_length=40, null=True)
+    birth_date = models.DateField('Дата рождения', null=True)
+    phone_number = models.CharField('Номер телефона', blank=True, null=True, max_length=20)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
                                     help_text='аллергоанамнез, хронические заболевания и т.п.')
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
     image = models.ImageField("Изображение", blank=True)
 
     def __str__(self):
-        return f'Заявитель {self.full_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
+        try:
+            return f'Заявитель {self.full_name()}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
+        except TypeError:
+            return f'(Ошибка при получении описания экземляра {self.__class__.__name__})'
+
+    def full_name(self):
+        try:
+            return ' '.join([self.surname, self.first_name, self.patronymic_name])
+        except TypeError:
+            return '(не удалось получить полное имя)'
+    full_name.short_description = 'ФИО'
 
     class Meta:
         verbose_name = 'Заявитель'
         verbose_name_plural = 'Заявители'
-        ordering = ['full_name']
+        # this is similar to full_name if Surname FirstName Patronymic format is used (i.e. Kuznetzov Anton Ivanovich)
+        ordering = ['surname', 'first_name', 'patronymic_name']
 
 
-class AppealModel(models.Model):
+class ServicePrintable:
+    def services_string(self):
+        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
+        Если их нет, то возращается строка '(нет служб)'"""
+        s = ', '.join([i.name for i in self.services.all()])
+        if s == '':
+            return '(нет служб)'
+        else:
+            return s
+
+    services_string.short_description = 'Задействованные службы'
+
+
+class AppealModel(models.Model, ServicePrintable):
     """Модель обращения"""
     class StatusChoice(models.TextChoices):
         IN_PROGRESS = 'В работе'
@@ -52,21 +78,12 @@ class AppealModel(models.Model):
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
     services.verbose_name = "Задействованные службы"
     status = models.CharField("Статус", max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
+    description = models.TextField("Описание", blank=True, null=True)
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""
-        return self.applicant.full_name
+        return self.applicant.full_name()
     applicant_name.short_description = 'ФИО заявителя'
-
-    def services_string(self):
-        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
-        Если их нет, то возращается строка '(нет служб)'"""
-        s = ', '.join([i.name for i in self.services.all()])
-        if s == '':
-            return '(нет служб)'
-        else:
-            return s
-    services_string.short_description = 'Задействованные службы'
 
     def __str__(self):
         return f'Обращение №{self.number} от {self.date}, заявитель: {self.applicant_name()}'
@@ -77,11 +94,13 @@ class AppealModel(models.Model):
         ordering = ['date', 'number']
 
 
-class AccidentModel(models.Model):
+class AccidentModel(models.Model, ServicePrintable):
     """Модель происшествия"""
     number = models.PositiveIntegerField('Номер')
     injured_count = models.PositiveIntegerField('Количество пострадавших')
     dont_call = models.BooleanField('Не звонить')
+    services = models.ManyToManyField(EmergencyServiceModel, blank=True)
+    addition_datetime = models.DateTimeField("Дата добавления", null=True)
 
     class Meta:
         verbose_name = 'Происшествие'

@@ -2,5 +2,5 @@
 /shelf/
 /workspace.xml
 *.sqlite3
-.idea/dbnavigator.xml
+.idea/
 *.rar

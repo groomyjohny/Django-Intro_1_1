@@ -17,6 +17,38 @@ class EmergencyServiceModel(models.Model):
         ordering = ['service_code']
 
 
+class ServicePrintable:
+    def services_string(self):
+        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
+        Если их нет, то возращается строка '(нет служб)'"""
+        s = ', '.join([i.name for i in self.services.all()])
+        if s == '':
+            return '(нет служб)'
+        else:
+            return s
+
+    services_string.short_description = 'Задействованные службы'
+
+
+class AccidentModel(models.Model, ServicePrintable):
+    """Модель происшествия"""
+    number = models.PositiveIntegerField('Номер')
+    injured_count = models.PositiveIntegerField('Количество пострадавших')
+    dont_call = models.BooleanField('Не звонить')
+    services = models.ManyToManyField(EmergencyServiceModel, blank=True)
+    addition_datetime = models.DateTimeField("Дата добавления", null=True)
+
+    def __str__(self):
+        return f"Происшествие №{self.number}, пострадавших: {self.injured_count}, дата: {self.addition_datetime}"
+
+    class Meta:
+        verbose_name = 'Происшествие'
+        verbose_name_plural = 'Происшествия'
+        indexes = [
+            models.Index(fields=['number'])
+        ]
+
+
 class ApplicantModel(models.Model):
     """Модель заявителя"""
     class GenderChoices(models.TextChoices):
@@ -29,6 +61,8 @@ class ApplicantModel(models.Model):
     phone_number = models.CharField('Номер телефона', blank=True, null=True, max_length=20)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
                                     help_text='аллергоанамнез, хронические заболевания и т.п.')
+    accidents = models.ManyToManyField(AccidentModel, blank=True)
+    accidents.verbose_name = 'Происшествия'
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
     image = models.ImageField("Изображение", blank=True)
 
@@ -50,19 +84,6 @@ class ApplicantModel(models.Model):
         verbose_name_plural = 'Заявители'
         # this is similar to full_name if Surname FirstName Patronymic format is used (i.e. Kuznetzov Anton Ivanovich)
         ordering = ['surname', 'first_name', 'patronymic_name']
-
-
-class ServicePrintable:
-    def services_string(self):
-        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
-        Если их нет, то возращается строка '(нет служб)'"""
-        s = ', '.join([i.name for i in self.services.all()])
-        if s == '':
-            return '(нет служб)'
-        else:
-            return s
-
-    services_string.short_description = 'Задействованные службы'
 
 
 class AppealModel(models.Model, ServicePrintable):
@@ -92,19 +113,3 @@ class AppealModel(models.Model, ServicePrintable):
         verbose_name = 'Обращение'
         verbose_name_plural = 'Обращения'
         ordering = ['date', 'number']
-
-
-class AccidentModel(models.Model, ServicePrintable):
-    """Модель происшествия"""
-    number = models.PositiveIntegerField('Номер')
-    injured_count = models.PositiveIntegerField('Количество пострадавших')
-    dont_call = models.BooleanField('Не звонить')
-    services = models.ManyToManyField(EmergencyServiceModel, blank=True)
-    addition_datetime = models.DateTimeField("Дата добавления", null=True)
-
-    class Meta:
-        verbose_name = 'Происшествие'
-        verbose_name_plural = 'Происшествия'
-        indexes = [
-            models.Index(fields=['number'])
-        ]

@@ -1,13 +1,15 @@
-<table>
-    <tr>
-        <th>Параметр</th>
-        <th>Значение</th>
-    </tr>
-    {% for k,v in params.items %}
+{% extends 'global_template.html' %}
+{% block 'container' %}
+    <table>
         <tr>
-            <td>{{k}}</td>
-            <td>{{v}}</td>
+            <th>Параметр</th>
+            <th>Значение</th>
         </tr>
-    {% endfor %}
-</table>
-
+        {% for k,v in params.items %}
+            <tr>
+                <td>{{k}}</td>
+                <td>{{v}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

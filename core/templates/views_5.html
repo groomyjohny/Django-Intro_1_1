@@ -1,9 +1,12 @@
-<p>ID: {{user_dict.id}}</p>
-<p>Фамилия: {{user_dict.surname}}</p>
-<p>Имя: {{user_dict.first_name}}</p>
-<p>Отчество: {{user_dict.patronymic_name}}</p>
-<p>Дата рождения: {{user_dict.birth_date}}</p>
-<p>Номер телефона: {{user_dict.phone_number}}</p>
-<p>Состояние здоровья: {{user_dict.health_state}}</p>
-<p>Пол: {{user_dict.gender}}</p>
-<p>Изображение: <img src="{{user_dict.image}}"></img></p>
+{% extends 'global_template.html' %}
+{% block 'container' %}
+    <p>ID: {{user_dict.id}}</p>
+    <p>Фамилия: {{user_dict.surname}}</p>
+    <p>Имя: {{user_dict.first_name}}</p>
+    <p>Отчество: {{user_dict.patronymic_name}}</p>
+    <p>Дата рождения: {{user_dict.birth_date}}</p>
+    <p>Номер телефона: {{user_dict.phone_number}}</p>
+    <p>Состояние здоровья: {{user_dict.health_state}}</p>
+    <p>Пол: {{user_dict.gender}}</p>
+    <p>Изображение: <img src="{{user_dict.image}}"></img></p>
+{% endblock %}

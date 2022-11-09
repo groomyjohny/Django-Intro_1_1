@@ -1,6 +1,9 @@
-<h1>Поиск заявителей по активности</h1>
-{% include 'base_filter.html' %}
+{% extends 'global_template.html' %}
+{% block 'container' %}
+    <h1>Поиск заявителей по активности</h1>
+    {% include 'base_filter.html' %}
 
-{% with filter.qs as object_list %}
-    {% include 'applicant_render.html' %}
-{% endwith %}
+    {% with filter.qs as object_list %}
+        {% include 'applicant_render.html' %}
+    {% endwith %}
+{% endblock %}

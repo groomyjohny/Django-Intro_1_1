@@ -1,10 +1,11 @@
 from django.db import models
+import datetime
 
 
 class EmergencyServiceModel(models.Model):
     """Модель экстренной службы"""
     name = models.CharField('Название', max_length=128)
-    service_code = models.IntegerField('Код службы')
+    service_code = models.PositiveIntegerField('Код службы')
     phone_number = models.CharField('Номер телефона', max_length=16)
 
     def __str__(self):
@@ -18,13 +19,19 @@ class EmergencyServiceModel(models.Model):
 
 class ApplicantModel(models.Model):
     """Модель заявителя"""
+    class GenderChoices(models.TextChoices):
+        M = 'М'  # строка 'М' - русская, поле - латинское
+        F = 'Ж'
     full_name = models.CharField('ФИО', max_length=128)
     birth_date = models.DateField('Дата рождения')
-    phone_number = models.BigIntegerField('Номер телефона')
-    health_state = models.TextField('Состояние здоровья')
+    phone_number = models.BigIntegerField('Номер телефона', blank=True)
+    health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
+                                    help_text='аллергоанамнез, хронические заболевания и т.п.')
+    gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
+    image = models.ImageField("Изображение", blank=True)
 
     def __str__(self):
-        return f'Заявитель {self.full_name}, р. {self.birth_date}, телефон: {self.phone_number}'
+        return f'Заявитель {self.full_name}, пол: {self.gender}, р. {self.birth_date}, телефон: {self.phone_number}'
 
     class Meta:
         verbose_name = 'Заявитель'
@@ -34,10 +41,17 @@ class ApplicantModel(models.Model):
 
 class AppealModel(models.Model):
     """Модель обращения"""
-    date = models.DateTimeField('Дата')
-    number = models.IntegerField('Номер')
+    class StatusChoice(models.TextChoices):
+        IN_PROGRESS = 'В работе'
+        DONE = 'Завершено'
+    date = models.DateTimeField('Дата', default=datetime.datetime.now)
+    number = models.PositiveIntegerField('Номер')
+    card_number = models.PositiveIntegerField('Номер карточки', unique=True, editable=False, null=True)
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
+    applicant.verbose_name = "Заявитель"
     services = models.ManyToManyField(EmergencyServiceModel, blank=True)
+    services.verbose_name = "Задействованные службы"
+    status = models.CharField("Статус", max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""
@@ -45,7 +59,8 @@ class AppealModel(models.Model):
     applicant_name.short_description = 'ФИО заявителя'
 
     def services_string(self):
-        """Возвращает названия служб, задействованных в этом обращении, в виде строки. Если их нет, то возращается '(нет служб)'"""
+        """Возвращает названия служб, задействованных в этом обращении, в виде строки.
+        Если их нет, то возращается строка '(нет служб)'"""
         s = ', '.join([i.name for i in self.services.all()])
         if s == '':
             return '(нет служб)'
@@ -60,3 +75,17 @@ class AppealModel(models.Model):
         verbose_name = 'Обращение'
         verbose_name_plural = 'Обращения'
         ordering = ['date', 'number']
+
+
+class AccidentModel(models.Model):
+    """Модель происшествия"""
+    number = models.PositiveIntegerField('Номер')
+    injured_count = models.PositiveIntegerField('Количество пострадавших')
+    dont_call = models.BooleanField('Не звонить')
+
+    class Meta:
+        verbose_name = 'Происшествие'
+        verbose_name_plural = 'Происшествия'
+        indexes = [
+            models.Index(fields=['number'])
+        ]

@@ -12,9 +12,14 @@ class EmergencyServiceAdmin(admin.ModelAdmin):
 
 @admin.register(core.models.ApplicantModel)
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'birth_date', 'phone_number', 'health_state')
+    list_display = ('full_name', 'gender', 'birth_date', 'phone_number', 'health_state')
 
 
 @admin.register(core.models.AppealModel)
 class AppealAdmin(admin.ModelAdmin):
-    list_display = ('date', 'number', 'applicant_name', 'services_string')
+    list_display = ('date', 'number', 'card_number', 'status', 'applicant_name', 'services_string')
+
+
+@admin.register(core.models.AccidentModel)
+class AccidentAdmin(admin.ModelAdmin):
+    list_display = ('number', 'injured_count', 'dont_call')

@@ -44,8 +44,14 @@ class ApplicantAdmin(admin.ModelAdmin):
 @admin.register(core.models.AppealModel)
 class AppealAdmin(admin.ModelAdmin):
     list_display = ('date', 'number', 'card_number', 'status', 'applicant_name', 'services_string', 'description')
-    readonly_fields = ('number', 'card_number')
+    readonly_fields = ['card_number']
     empty_value_display = '(нет значения)'
+
+    def get_fields(self, request, obj=None):
+        fields = super().get_fields(request, obj)
+        if obj:
+            fields.remove('number')
+        return fields
 
 
 # admin.site.register(core.models.AccidentModel)

@@ -33,13 +33,13 @@ def rq_echo_view(request):
 
 def user_data_by_phone_view(request):
     phone = request.GET['phone']
-    usr = models.ApplicantModel.objects.filter(phone_number=phone).values()[0]
+    usr = models.ApplicantModel.objects.filter(phone_number=phone).values().first()
 
-    return render(request, 'views_5.html', context={'user_dict': usr}) # instead of just passing dict we can form it ourselves
+    return render(request, 'views_5.html', context={'user_in_a_list': [usr]})
 
 
 def user_json(request, uid):
-    usr = models.ApplicantModel.objects.filter(id=uid).values()[0]
+    usr = models.ApplicantModel.objects.filter(id=uid).values().first()
 
     return JsonResponse({'result': usr})
 

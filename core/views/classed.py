@@ -36,7 +36,7 @@ class RedirectDstView(TemplateView):
 
 
 class RedirectSrcView(RedirectView):
-    url = '/core/views/redirect_dst'  # TODO: hardcoded redirect
+    url = '/core/redirect_dst'  # TODO: hardcoded redirect
 
 
 class RequestEchoView(TemplateView):
@@ -51,13 +51,13 @@ class UserDataByPhoneView(TemplateView):
 
     def get_context_data(self, **kwargs):
         phone = self.request.GET['phone']
-        usr = models.ApplicantModel.objects.filter(phone_number=phone).values()[0]
+        usr = models.ApplicantModel.objects.filter(phone_number=phone).values().first()
         return {'user_in_a_list': [usr]}
 
 
 class UserJsonView(View):
     def get(self, request, **kwargs):
-        usr = models.ApplicantModel.objects.filter(id=kwargs.get('uid')).values()[0]
+        usr = models.ApplicantModel.objects.filter(id=kwargs.get('uid')).values().first()
         return JsonResponse({'result': usr})
 
 

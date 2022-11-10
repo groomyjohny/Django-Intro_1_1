@@ -4,13 +4,13 @@ import core.views.classed
 urlpatterns = [
     path('functional/', include('core.urls_functional')),
 
-    path('views/1', core.views.classed.AccidentCountView.as_view()),
-    path('views/2', core.views.classed.ApplicantPhoneNumberView.as_view()),
-    path('views/3', core.views.classed.RedirectSrcView.as_view()),
-    path('views/redirect_dst', core.views.classed.RedirectDstView.as_view()),
-    path('views/4', core.views.classed.RequestEchoView.as_view()),
-    path('views/5', core.views.classed.UserDataByPhoneView.as_view()),
-    path('views/6/<int:uid>', core.views.classed.UserJsonView.as_view()),
+    path('view_1', core.views.classed.AccidentCountView.as_view()),
+    path('view_2', core.views.classed.ApplicantPhoneNumberView.as_view()),
+    path('view_3', core.views.classed.RedirectSrcView.as_view()),
+    path('redirect_dst', core.views.classed.RedirectDstView.as_view()),
+    path('view_4', core.views.classed.RequestEchoView.as_view()),
+    path('view_5', core.views.classed.UserDataByPhoneView.as_view()),
+    path('view_6/<int:uid>', core.views.classed.UserJsonView.as_view()),
 
     path('all_applicants', core.views.classed.AllApllicantsView.as_view()),
     path('all_applicants_numbered', core.views.classed.AllApllicantsNumberedView.as_view()),

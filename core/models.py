@@ -92,10 +92,8 @@ class AppealModel(models.Model, ServicePrintable):
     date = models.DateTimeField('Дата', default=datetime.datetime.now)
     number = models.PositiveIntegerField('Номер')
     card_number = models.PositiveIntegerField('Номер карточки', unique=True, editable=False, null=True)
-    applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals')
-    applicant.verbose_name = "Заявитель"
-    services = models.ManyToManyField(EmergencyServiceModel, blank=True)
-    services.verbose_name = "Задействованные службы"
+    applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals', verbose_name='Заявитель')
+    services = models.ManyToManyField(EmergencyServiceModel, blank=True, verbose_name='Задействованные службы')
     status = models.CharField("Статус", max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
     description = models.TextField("Описание", blank=True, null=True)
 

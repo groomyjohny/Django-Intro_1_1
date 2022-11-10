@@ -11,7 +11,7 @@ from core import models
 class EmergencyServiceAdmin(admin.ModelAdmin):
     list_display = ('name', 'service_code', 'phone_number')
     empty_value_display = '(нет значения)'
-    search_fields = ['name']
+    search_fields = ('name',)
 
 
 class DecadeBornListFilter(admin.SimpleListFilter):
@@ -20,7 +20,7 @@ class DecadeBornListFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
         return reversed(tuple(
-            (f"{yr},{yr+10}", f"{yr}-{yr+9}") for yr in range(1900, datetime.datetime.now().year+1, 10)
+            (f'{yr},{yr+10}', f'{yr}-{yr+9}') for yr in range(1900, datetime.datetime.now().year+1, 10)
         ))
 
     def queryset(self, request, queryset):
@@ -44,7 +44,7 @@ class ApplicantAdmin(admin.ModelAdmin):
 @admin.register(core.models.AppealModel)
 class AppealAdmin(admin.ModelAdmin):
     list_display = ('date', 'number', 'card_number', 'status', 'applicant_name', 'services_string', 'description')
-    readonly_fields = ['card_number']
+    readonly_fields = ('card_number',)
     empty_value_display = '(нет значения)'
 
     def get_fields(self, request, obj=None):
@@ -54,10 +54,8 @@ class AppealAdmin(admin.ModelAdmin):
         return fields
 
 
-# admin.site.register(core.models.AccidentModel)
 @admin.register(core.models.AccidentModel)
 class AccidentAdmin(admin.ModelAdmin):
     list_display = ('number', 'addition_datetime', 'injured_count', 'dont_call', 'services_string')
     empty_value_display = '(нет значения)'
-    ordering = ['-addition_datetime']
-
+    ordering = ('-addition_datetime',)

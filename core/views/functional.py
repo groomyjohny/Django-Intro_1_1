@@ -54,20 +54,20 @@ def footer_view(request):
 
 def all_applicants_view(request):
     users = models.ApplicantModel.objects.all()
-    return render(request, "all_applicants.html", context={'users': users})
+    return render(request, "all_applicants.html", context={'object_list': users})
 
 
 def all_applicants_numbered_view(request):
     users = models.ApplicantModel.objects.all()
-    return render(request, 'all_applicants_numbered.html', context={'users': users})
+    return render(request, 'all_applicants_numbered.html', context={'object_list': users})
 
 
 def all_accidents_view(request):
     accidents = models.AccidentModel.objects.all()
-    return render(request, "all_accidents.html", context={'accidents': accidents})
+    return render(request, "all_accidents.html", context={'object_list': accidents})
 
 
 def all_appeals_view(request):
     appeals = models.AppealModel.objects.all()
     c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
-    return render(request, "all_appeals.html", context={'appeals': appeals, 'avg_service_count': c['services__count__avg']})
+    return render(request, "all_appeals.html", context={'object_list': appeals, 'avg_service_count': c['services__count__avg']})

@@ -53,15 +53,14 @@ class ApplicantModel(models.Model):
     class GenderChoices(models.TextChoices):  # можно через tuple сделать
         M = 'М'  # строка 'М' - русская, поле - латинское
         F = 'Ж'
-    surname = models.CharField('Фамилия', max_length=255, null=True)
-    first_name = models.CharField('Имя', max_length=255, null=True)
-    patronymic_name = models.CharField('Отчество', max_length=255, null=True)
+    surname = models.CharField('Фамилия', default='', max_length=255)
+    first_name = models.CharField('Имя', default='', max_length=255)
+    patronymic_name = models.CharField('Отчество', default='', max_length=255)
     birth_date = models.DateField('Дата рождения', null=True)
-    phone_number = models.CharField('Номер телефона', blank=True, null=True, max_length=255)
+    phone_number = models.CharField('Номер телефона', default='', blank=True, max_length=255)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
                                     help_text='аллергоанамнез, хронические заболевания и т.п.')
-    accidents = models.ManyToManyField(AccidentModel, blank=True)  # verbose_name можно здесь, переделать само отношение
-    accidents.verbose_name = 'Происшествия'
+    accidents = models.ManyToManyField(AccidentModel, blank=True, verbose_name='Происшествия')  # verbose_name можно здесь, переделать само отношение
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
     image = models.ImageField('Изображение', blank=True)
 
@@ -95,7 +94,7 @@ class AppealModel(models.Model, ServicePrintable):
     applicant = models.ForeignKey(ApplicantModel, on_delete=models.CASCADE, related_name='appeals', verbose_name='Заявитель')
     services = models.ManyToManyField(EmergencyServiceModel, blank=True, verbose_name='Задействованные службы')
     status = models.CharField("Статус", max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
-    description = models.TextField("Описание", blank=True, null=True)
+    description = models.TextField("Описание", blank=True, default='')
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""

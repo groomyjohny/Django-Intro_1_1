@@ -1,7 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 import core.views.classed
 
 urlpatterns = [
+    path('functional/', include('core.urls_functional')),
+
     path('views/1', core.views.classed.AccidentCountView.as_view()),
     path('views/2', core.views.classed.ApplicantPhoneNumberView.as_view()),
     path('views/3', core.views.classed.RedirectSrcView.as_view()),

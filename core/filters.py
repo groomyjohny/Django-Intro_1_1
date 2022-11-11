@@ -4,42 +4,38 @@ import django_filters
 from core import models
 from django.db.models import Q, Count
 
+class ApplicantNameSearchMixin:
+    def applicant_full_name_filter(self, queryset, name, value, surname, first_name, middle_name, filter):
+        total_q = Q()
+        s = value.split(' ')
+        sn, fn, mn = (i+'__'+filter for i in (surname, first_name, middle_name))
 
-# TODO: all of this needs refactoring. Lots of code duplication
-class ApplicantFilter(django_filters.FilterSet):
-    applicant_full_name_contains = django_filters.CharFilter(method='applicant_full_name_contains_filter', label='ФИО заявителя содержит')
-    applicant_full_name_exact = django_filters.CharFilter(method='applicant_full_name_exact_filter', label='ФИО заявителя (точное)')
+        if len(s) == 0:
+            return queryset
+        elif len(s) == 1:
+            total_q |= Q(**{sn: s[0]}) | Q(**{fn: s[0]}) | Q(**{mn: s[0]})
+        elif len(s) == 2:
+            total_q |= \
+                (Q(**{sn: s[0]}) & Q(**{fn: s[1]})) | \
+                (Q(**{fn: s[0]}) & Q(**{mn: s[1]}))
+        elif len(s) == 3:
+            total_q |= Q(**{sn: s[0]}) & Q(**{fn: s[1]}) & Q(**{mn: s[2]})
+        else:
+            return queryset.none()
+
+        return queryset.filter(total_q)
+
+
+class ApplicantFilter(django_filters.FilterSet, ApplicantNameSearchMixin):
+    applicant_full_name_contains = django_filters.CharFilter(method='contains_method', label='ФИО заявителя содержит')
+    applicant_full_name_exact = django_filters.CharFilter(method='exact_method', label='ФИО заявителя (точное)')
     birth_year_exact = django_filters.CharFilter(method='birth_year_exact_filter', label='Год рождения', max_length=4)
 
-    def applicant_full_name_contains_filter(self, queryset, name, value):
-        total_q = Q()
-        s = value.split(' ')
-        if len(s) == 1:
-            total_q |= Q(surname__icontains=s[0]) | Q(first_name__icontains=s[0]) | Q(patronymic_name__icontains=s[0])
-        elif len(s) == 2:
-            total_q |= (Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1])) | \
-                       (Q(first_name__icontains=s[0]) & Q(patronymic_name__icontains=s[1]))
-        elif len(s) == 3:
-            total_q |= Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1]) & Q(patronymic_name__icontains=s[2])
-        else:
-            return queryset.none()
+    def contains_method(self, queryset, name, value):
+        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'icontains')
 
-        return queryset.filter(total_q)
-
-    def applicant_full_name_exact_filter(self, queryset, name, value):
-        total_q = Q()
-        s = value.split(' ')
-        if len(s) == 1:
-            total_q |= Q(surname__exact=s[0]) | Q(first_name__exact=s[0]) | Q(patronymic_name__exact=s[0])
-        elif len(s) == 2:
-            total_q |= (Q(surname__exact=s[0]) & Q(first_name__exact=s[1])) | \
-                       (Q(first_name__exact=s[0]) & Q(patronymic_name__exact=s[1]))
-        elif len(s) == 3:
-            total_q |= Q(surname__exact=s[0]) & Q(first_name__exact=s[1]) & Q(patronymic_name__exact=s[2])
-        else:
-            return queryset.none()
-
-        return queryset.filter(total_q)
+    def exact_method(self, queryset, name, value):
+        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'exact')
 
     def birth_year_exact_filter(self, queryset, name, value):
         target_year = int(value)
@@ -53,54 +49,25 @@ class ApplicantFilter(django_filters.FilterSet):
         model = models.ApplicantModel
         fields = ('phone_number', 'birth_year_exact', 'applicant_full_name_contains', 'applicant_full_name_exact')
         exclude = ('image',)
-        #fields = ['applicant_full_name']
-        #fields = {
-        #    'phone_number': ['icontains', 'exact'],
-        #    'birth_date': ['lte', 'gte'],
-        #    'applicant_full_name': ['icontains', 'exact'],
-        #    #'full_name': ['icontains', 'exact'],
-        #}
 
 
-class AppealFilter(django_filters.FilterSet):
-    applicant_full_name_contains = django_filters.CharFilter(method='applicant_full_name_contains_filter', label="ФИО заявителя содержит")
-    applicant_full_name_exact = django_filters.CharFilter(method='applicant_full_name_exact_filter', label="ФИО заявителя (точное)")
+class AppealFilter(django_filters.FilterSet, ApplicantNameSearchMixin):
+    applicant_full_name_contains = django_filters.CharFilter(method='applicant_contains_method', label="ФИО заявителя содержит")
+    applicant_full_name_exact = django_filters.CharFilter(method='applicant_exact_method', label="ФИО заявителя (точное)")
     service_code_contains = django_filters.CharFilter(method='service_code_contains_filter', label='Код службы содержит')
     service_code_exact = django_filters.CharFilter(method='service_code_exact_filter', label='Код службы (точный)')
 
-    def applicant_full_name_contains_filter(self, queryset, name, value):
-        total_q = Q()
-        s = value.split(' ')
-        if len(s) == 1:
-            total_q |= Q(applicant__surname__icontains=s[0]) | Q(applicant__first_name__icontains=s[0]) | Q(
-                applicant__patronymic_name__icontains=s[0])
-        elif len(s) == 2:
-            total_q |= (Q(applicant__surname__icontains=s[0]) & Q(applicant__first_name__icontains=s[1])) | \
-                       (Q(applicant__first_name__icontains=s[0]) & Q(applicant__patronymic_name__icontains=s[1]))
-        elif len(s) == 3:
-            total_q |= Q(applicant__surname__icontains=s[0]) & Q(applicant__first_name__icontains=s[1]) & Q(
-                applicant__patronymic_name__icontains=s[2])
-        else:
-            return queryset.none()
+    def applicant_contains_method(self, queryset, name, value):
+        return self.applicant_full_name_filter(
+            queryset, name, value,
+            'applicant__surname', 'applicant__first_name', 'applicant__patronymic_name',
+            'icontains')
 
-        return queryset.filter(total_q)
-
-    def applicant_full_name_exact_filter(self, queryset, name, value):
-        total_q = Q()
-        s = value.split(' ')
-        if len(s) == 1:
-            total_q |= Q(applicant__surname__exact=s[0]) | Q(applicant__first_name__exact=s[0]) | Q(
-                applicant__patronymic_name__exact=s[0])
-        elif len(s) == 2:
-            total_q |= (Q(applicant__surname__exact=s[0]) & Q(applicant__first_name__exact=s[1])) | \
-                       (Q(applicant__first_name__exact=s[0]) & Q(applicant__patronymic_name__exact=s[1]))
-        elif len(s) == 3:
-            total_q |= Q(applicant__surname__exact=s[0]) & Q(applicant__first_name__exact=s[1]) & Q(
-                applicant__patronymic_name__exact=s[2])
-        else:
-            return queryset.none()
-
-        return queryset.filter(total_q)
+    def applicant_exact_method(self, queryset, name, value):
+        return self.applicant_full_name_filter(
+            queryset, name, value,
+            'applicant__surname', 'applicant__first_name', 'applicant__patronymic_name',
+            'exact')
 
     def service_code_contains_filter(self, queryset, name, value):
         return queryset.filter(services__service_code__icontains=value).distinct()
@@ -111,48 +78,18 @@ class AppealFilter(django_filters.FilterSet):
     class Meta:
         model = models.AppealModel
         fields = ('status', 'service_code_contains', 'service_code_exact', 'applicant_full_name_contains', 'applicant_full_name_exact')
-        #fields = {
-        #    'status': ['exact'],
-        #    'services__service_code': ['exact', 'contains'],
-        #    #'applicant__full_name': ['exact', 'contains'],
-        #}
 
 
-class ApplicantNameFilter(django_filters.FilterSet):
-    name_contains = django_filters.CharFilter(method='name_contains_filter', label='ФИО заявителя содержит')
-    name_exact = django_filters.CharFilter(method='name_exacts_filter', label='ФИО заявителя (точное)')
+class ApplicantNameFilter(django_filters.FilterSet, ApplicantNameSearchMixin):
+    name_contains = django_filters.CharFilter(method='applicant_contains_method', label='ФИО заявителя содержит')
+    name_exact = django_filters.CharFilter(method='applicant_exact_method', label='ФИО заявителя (точное)')
     appeals_count_range = django_filters.RangeFilter(method='appeals_count', label='Количество обращений')
 
-    def name_contains_filter(self, queryset, name, value):
-        total_q = Q()
-        s = value.split(' ')
-        if len(s) == 1:
-            total_q |= Q(surname__icontains=s[0]) | Q(first_name__icontains=s[0]) | Q(patronymic_name__icontains=s[0])
-        elif len(s) == 2:
-            total_q |= (Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1])) | \
-                       (Q(first_name__icontains=s[0]) & Q(patronymic_name__icontains=s[1]))
-        elif len(s) == 3:
-            total_q |= Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1]) & Q(patronymic_name__icontains=s[2])
-        else:
-            return queryset.none()
+    def applicant_contains_method(self, queryset, name, value):
+        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'icontains')
 
-        return queryset.filter(total_q)
-
-    def name_contains_exact(self, queryset, name, value):
-        total_q = Q()
-        s = value.split(' ')
-        if len(s) == 1:
-            total_q |= Q(surname__exact=s[0]) | Q(first_name__exact=s[0]) | Q(patronymic_name__exact=s[0])
-        elif len(s) == 2:
-            total_q |= (Q(surname__exact=s[0]) & Q(first_name__exact=s[1])) | \
-                       (Q(first_name__exact=s[0]) & Q(patronymic_name__exact=s[1]))
-        elif len(s) == 3:
-            total_q |= Q(surname__exact=s[0]) & Q(first_name__exact=s[1]) & Q(patronymic_name__exact=s[2])
-        else:
-            return queryset.none()
-
-        return queryset.filter(total_q)
-
+    def applicant_exact_method(self, queryset, name, value):
+        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'exact')
 
     def appeals_count(self, queryset, name, value):
         qs = queryset.annotate(appeals_count=Count('appeals'))

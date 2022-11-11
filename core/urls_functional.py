@@ -20,6 +20,14 @@ urlpatterns = [
     path('add_applicant', core.views.functional.add_applicant),
     path('add_service', core.views.functional.add_service),
 
+    path('edit_service/<int:pk>', core.views.functional.edit_service),
+    path('edit_applicant/<int:pk>', core.views.functional.edit_applicant),
+    path('edit_appeal/<int:pk>', core.views.functional.edit_appeal),
+
+    # path('filter_applicant', core.views.functional.filter_applicant),
+    # path('filter_appeal', core.views.functional.filter_appeal),
+    # path('filter_applicant_name', core.views.functional.filter_applicant_activity),
+
     path('', core.views.functional.index_view),
     path('footer', core.views.functional.footer_view),
     ]

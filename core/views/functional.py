@@ -119,3 +119,42 @@ def add_service(request):
             return render(request, 'add_service.html', status=201, context={'form': forms.ServiceForm()})
         else:
             return render(request, 'add_service.html', status=400, context={'form': f})
+
+
+def edit_service(request, pk):
+    obj = get_object_or_404(models.EmergencyServiceModel, id=pk)
+    if request.method == 'GET':
+        return render(request, 'edit_service.html', context={'form': forms.ServiceForm(instance=obj)})
+    if request.method == 'POST':
+        f = forms.ServiceForm(request.POST, instance=obj)
+        if f.is_valid():
+            f.save()
+            return render(request, 'edit_service.html', status=201, context={'form': forms.ServiceForm()})
+        else:
+            return render(request, 'edit_service.html', status=400, context={'form': f})
+
+
+def edit_applicant(request, pk):
+    obj = get_object_or_404(models.ApplicantModel, id=pk)
+    if request.method == 'GET':
+        return render(request, 'edit_applicant.html', context={'form': forms.ApplicantForm(instance=obj)})
+    if request.method == 'POST':
+        f = forms.ApplicantForm(request.POST, instance=obj)
+        if f.is_valid():
+            f.save()
+            return render(request, 'edit_applicant.html', status=201, context={'form': forms.ApplicantForm()})
+        else:
+            return render(request, 'edit_applicant.html', status=400, context={'form': f})
+
+
+def edit_appeal(request, pk):
+    obj = get_object_or_404(models.AppealModel, id=pk)
+    if request.method == 'GET':
+        return render(request, 'edit_appeal.html', context={'form': forms.AppealForm(instance=obj)})
+    if request.method == 'POST':
+        f = forms.AppealForm(request.POST, instance=obj)
+        if f.is_valid():
+            f.save()
+            return render(request, 'edit_appeal.html', status=201, context={'form': forms.AppealForm()})
+        else:
+            return render(request, 'edit_appeal.html', status=400, context={'form': f})

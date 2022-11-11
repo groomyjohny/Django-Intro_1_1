@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse, HttpResponse
-from core import models
+from core import models, filters, forms
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
 
@@ -71,3 +71,51 @@ def all_appeals_view(request):
     appeals = models.AppealModel.objects.all()
     c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
     return render(request, "all_appeals.html", context={'object_list': appeals, 'avg_service_count': c['services__count__avg']})
+
+
+def add_accident(request):
+    if request.method == 'GET':
+        return render(request, 'add_accident.html', context={'form': forms.AccidentForm()})
+    if request.method == 'POST':
+        f = forms.AccidentForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_accident.html', status=201, context={'form': forms.AccidentForm()})
+        else:
+            return render(request, 'add_accident.html', status=400, context={'form': f})
+
+
+def add_appeal(request):
+    if request.method == 'GET':
+        return render(request, 'add_appeal.html', context={'form': forms.AppealForm()})
+    if request.method == 'POST':
+        f = forms.AppealForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_appeal.html', status=201, context={'form': forms.AppealForm()})
+        else:
+            return render(request, 'add_appeal.html', status=400, context={'form': f})
+
+
+def add_applicant(request):
+    if request.method == 'GET':
+        return render(request, 'add_applicant.html', context={'form': forms.ApplicantForm()})
+    if request.method == 'POST':
+        f = forms.ApplicantForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_applicant.html', status=201, context={'form': forms.ApplicantForm()})
+        else:
+            return render(request, 'add_applicant.html', status=400, context={'form': f})
+
+
+def add_service(request):
+    if request.method == 'GET':
+        return render(request, 'add_service.html', context={'form': forms.ServiceForm()})
+    if request.method == 'POST':
+        f = forms.ServiceForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_service.html', status=201, context={'form': forms.ServiceForm()})
+        else:
+            return render(request, 'add_service.html', status=400, context={'form': f})

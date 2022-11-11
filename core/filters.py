@@ -4,6 +4,7 @@ import django_filters
 from core import models
 from django.db.models import Q, Count
 
+
 class ApplicantNameSearchMixin:
     def applicant_full_name_filter(self, queryset, name, value, surname, first_name, middle_name, filter):
         total_q = Q()
@@ -32,10 +33,16 @@ class ApplicantFilter(django_filters.FilterSet, ApplicantNameSearchMixin):
     birth_year_exact = django_filters.CharFilter(method='birth_year_exact_filter', label='Год рождения', max_length=4)
 
     def contains_method(self, queryset, name, value):
-        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'icontains')
+        return self.applicant_full_name_filter(
+            queryset, name, value,
+            'surname', 'first_name', 'patronymic_name',
+            'icontains')
 
     def exact_method(self, queryset, name, value):
-        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'exact')
+        return self.applicant_full_name_filter(
+            queryset, name, value,
+            'surname', 'first_name', 'patronymic_name',
+            'exact')
 
     def birth_year_exact_filter(self, queryset, name, value):
         target_year = int(value)
@@ -86,10 +93,16 @@ class ApplicantNameFilter(django_filters.FilterSet, ApplicantNameSearchMixin):
     appeals_count_range = django_filters.RangeFilter(method='appeals_count', label='Количество обращений')
 
     def applicant_contains_method(self, queryset, name, value):
-        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'icontains')
+        return self.applicant_full_name_filter(
+            queryset, name, value,
+            'surname', 'first_name', 'patronymic_name',
+            'icontains')
 
     def applicant_exact_method(self, queryset, name, value):
-        return self.applicant_full_name_filter(queryset, name, value, 'surname', 'first_name', 'patronymic_name', 'exact')
+        return self.applicant_full_name_filter(
+            queryset, name, value,
+            'surname', 'first_name', 'patronymic_name',
+            'exact')
 
     def appeals_count(self, queryset, name, value):
         qs = queryset.annotate(appeals_count=Count('appeals'))

@@ -15,13 +15,17 @@
     border: 1px solid black;
 }
 
-#nav-menu button:hover {
+#nav-menu button[aria-expanded="false"]:hover {
     background-color: #b0b0ff
 }
 
 #nav-menu button[aria-expanded="true"] {
     background-color: #404080;
     color: white;
+}
+
+#nav-menu button[aria-expanded="true"]:hover {
+    background-color: #8080a0
 }
 
 .nav-menu-category {

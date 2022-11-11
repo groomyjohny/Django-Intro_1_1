@@ -29,25 +29,6 @@ class ServicePrintable:
     services_string.short_description = 'Задействованные службы'
 
 
-class AccidentModel(models.Model, ServicePrintable):
-    """Модель происшествия"""
-    number = models.PositiveIntegerField('Номер')
-    injured_count = models.PositiveIntegerField('Количество пострадавших')
-    dont_call = models.BooleanField('Не звонить', default=False)
-    services = models.ManyToManyField(EmergencyServiceModel, blank=True)
-    addition_datetime = models.DateTimeField('Дата добавления', null=True)  # consider auto_add_now
-
-    def __str__(self):
-        return f"Происшествие №{self.number}, пострадавших: {self.injured_count}, дата: {self.addition_datetime}"
-
-    class Meta:
-        verbose_name = 'Происшествие'
-        verbose_name_plural = 'Происшествия'
-        indexes = (
-            models.Index(fields=['number']),
-        )
-
-
 class ApplicantModel(models.Model):
     """Модель заявителя"""
     class GenderChoices(models.TextChoices):  # можно через tuple сделать
@@ -60,7 +41,6 @@ class ApplicantModel(models.Model):
     phone_number = models.CharField('Номер телефона', default='', blank=True, max_length=255)
     health_state = models.TextField('Состояние здоровья', blank=True, default='практически здоров',
                                     help_text='аллергоанамнез, хронические заболевания и т.п.')
-    accidents = models.ManyToManyField(AccidentModel, blank=True, verbose_name='Происшествия')  # verbose_name можно здесь, переделать само отношение
     gender = models.CharField('Пол', max_length=1, choices=GenderChoices.choices, default=GenderChoices.M)
     image = models.ImageField('Изображение', blank=True)
 
@@ -95,6 +75,12 @@ class AppealModel(models.Model, ServicePrintable):
     services = models.ManyToManyField(EmergencyServiceModel, blank=True, verbose_name='Задействованные службы')
     status = models.CharField("Статус", max_length=16, choices=StatusChoice.choices, default=StatusChoice.IN_PROGRESS)
     description = models.TextField("Описание", blank=True, default='')
+    injured_count = models.PositiveIntegerField('Количество пострадавших', null=True)
+    dont_call = models.BooleanField('Не звонить', default=False)
+
+    indexes = (
+        models.Index(fields=['number']),
+    )
 
     def applicant_name(self):
         """Возвращает ФИО заявителя этого обращения"""
@@ -102,7 +88,8 @@ class AppealModel(models.Model, ServicePrintable):
     applicant_name.short_description = 'ФИО заявителя'
 
     def __str__(self):
-        return f'Обращение №{self.number} от {self.date}, заявитель: {self.applicant_name()}'
+        should_call = "нет" if self.dont_call else "да"
+        return f'Обращение №{self.number} от {self.date}, заявитель: {self.applicant_name()}, пострадавших: {self.injured_count}, звонить: {should_call}'
 
     class Meta:
         verbose_name = 'Обращение'

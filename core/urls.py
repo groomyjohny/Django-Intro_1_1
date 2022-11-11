@@ -14,13 +14,11 @@ urlpatterns = [
 
     path('all_applicants', core.views.classed.AllApllicantsView.as_view()),
     path('all_applicants_numbered', core.views.classed.AllApllicantsNumberedView.as_view()),
-    path('all_accidents', core.views.classed.AllAccidentsView.as_view()),
     path('all_appeals', core.views.classed.AllAppealsView.as_view()),
 
     path('add_service', core.views.classed.AddServiceView.as_view()),
     path('add_applicant', core.views.classed.AddApplicantView.as_view()),
     path('add_appeal', core.views.classed.AddAppealView.as_view()),
-    path('add_accident', core.views.classed.AddAccidentView.as_view()),
 
     path('edit_service/<int:pk>', core.views.classed.EditServiceView.as_view()),
     path('edit_applicant/<int:pk>', core.views.classed.EditApplicantView.as_view()),

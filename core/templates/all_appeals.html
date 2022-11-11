@@ -4,6 +4,6 @@
     {% include 'appeal_render.html' %}
     <p><p>
         <h3>Среднее количество служб на обращение: {{avg_service_count|floatformat:0}}</h3><p/>
-        <h3>Всего обращений: {{appeals|length}}</h3>
+        <h3>Всего обращений: {{object_list|length}}</h3>
     </p>
 {% endblock %}

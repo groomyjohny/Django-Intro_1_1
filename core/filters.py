@@ -7,6 +7,7 @@ from django.db.models import Q, Count
 
 class ApplicantNameSearchMixin:
     def applicant_full_name_filter(self, queryset, name, value, surname_field, first_name_field, middle_name_field, filter):
+        # TODO: perhaps 'contains' search should force exact match for all fields except the last?
         total_q = Q()
         s = value.split(' ')
         sn, fn, mn = (i+'__'+filter for i in (surname_field, first_name_field, middle_name_field))

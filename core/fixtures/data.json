@@ -1,0 +1,491 @@
+[
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 1,
+  "fields": {
+    "name": "Полиция",
+    "service_code": "02",
+    "phone_number": "02"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 2,
+  "fields": {
+    "name": "Скорая помощь",
+    "service_code": "03",
+    "phone_number": "03"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 3,
+  "fields": {
+    "name": "Газовая служба",
+    "service_code": "04",
+    "phone_number": "04"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 4,
+  "fields": {
+    "name": "Пожарная служба",
+    "service_code": "01",
+    "phone_number": "01"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 5,
+  "fields": {
+    "name": "Общая экcтренная служба",
+    "service_code": "010",
+    "phone_number": "112"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 6,
+  "fields": {
+    "name": "Неэкстренная служба",
+    "service_code": "016",
+    "phone_number": "999"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 7,
+  "fields": {
+    "name": "Новая экстренная служба",
+    "service_code": "113",
+    "phone_number": "2334"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 8,
+  "fields": {
+    "name": "Новая 2-я экстренная служба",
+    "service_code": "129",
+    "phone_number": "888"
+  }
+},
+{
+  "model": "core.emergencyservicemodel",
+  "pk": 10,
+  "fields": {
+    "name": "class test3",
+    "service_code": "0323",
+    "phone_number": "7766"
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 1,
+  "fields": {
+    "surname": "Иванов",
+    "first_name": "Иван",
+    "patronymic_name": "Иванович",
+    "birth_date": "1966-04-23",
+    "phone_number": "89873333333",
+    "health_state": "Жалуется на нерегулярную боль в спине",
+    "gender": "М",
+    "image": "Безымянный_uMoHhBU.png"
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 2,
+  "fields": {
+    "surname": "Кузнецова",
+    "first_name": "Мария",
+    "patronymic_name": "Петровна",
+    "birth_date": "1977-01-31",
+    "phone_number": "89879009023",
+    "health_state": "Собирается провести плановый медосмотр",
+    "gender": "Ж",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 3,
+  "fields": {
+    "surname": "Петров",
+    "first_name": "Алексей",
+    "patronymic_name": "Иванович",
+    "birth_date": "1989-01-01",
+    "phone_number": "89053113322",
+    "health_state": "Нет предыдущих обращений",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 4,
+  "fields": {
+    "surname": "Кузьмин",
+    "first_name": "Андрей",
+    "patronymic_name": "Петрович",
+    "birth_date": "1988-02-23",
+    "phone_number": "890343234255",
+    "health_state": "практически здоров",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 5,
+  "fields": {
+    "surname": "Орлова",
+    "first_name": "Анастасия",
+    "patronymic_name": "Павловна",
+    "birth_date": "2005-11-23",
+    "phone_number": "893534224534",
+    "health_state": "практически здорова",
+    "gender": "Ж",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 7,
+  "fields": {
+    "surname": "Петров",
+    "first_name": "Антон",
+    "patronymic_name": "Валерьевич",
+    "birth_date": "1974-03-23",
+    "phone_number": "891782934232",
+    "health_state": "Полностью здоров(а)",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 8,
+  "fields": {
+    "surname": "Курышева",
+    "first_name": "Вера",
+    "patronymic_name": "Антоновна",
+    "birth_date": "1988-10-22",
+    "phone_number": "8917283422333",
+    "health_state": "Полностью здоров(а)",
+    "gender": "Ж",
+    "image": "Безымянный.png"
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 9,
+  "fields": {
+    "surname": "",
+    "first_name": "",
+    "patronymic_name": "",
+    "birth_date": null,
+    "phone_number": "23452345",
+    "health_state": "Полностью здоров(а)",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 13,
+  "fields": {
+    "surname": "Андреев",
+    "first_name": "Павел",
+    "patronymic_name": "Валерьевич",
+    "birth_date": "1989-02-11",
+    "phone_number": "",
+    "health_state": "практически здоров",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 14,
+  "fields": {
+    "surname": "Красина",
+    "first_name": "Елена",
+    "patronymic_name": "Анатольевна",
+    "birth_date": "1992-07-12",
+    "phone_number": "",
+    "health_state": "практически здоров",
+    "gender": "Ж",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 15,
+  "fields": {
+    "surname": "ЗАГЛАВНЫМИ",
+    "first_name": "ВСЕ",
+    "patronymic_name": "БУКВАМИ",
+    "birth_date": "1994-02-04",
+    "phone_number": "",
+    "health_state": "практически здоров",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 16,
+  "fields": {
+    "surname": "буквы",
+    "first_name": "маленькие",
+    "patronymic_name": "везде",
+    "birth_date": "1992-10-22",
+    "phone_number": "958694596",
+    "health_state": "практически здоров",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 17,
+  "fields": {
+    "surname": "БукВЫ",
+    "first_name": "сЛучАЙные",
+    "patronymic_name": "В_имЕнИ",
+    "birth_date": "2007-12-20",
+    "phone_number": "",
+    "health_state": "практически здоров",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 18,
+  "fields": {
+    "surname": "ещЁ",
+    "first_name": "и",
+    "patronymic_name": "СлуЧаЙНЫх",
+    "birth_date": "2008-04-05",
+    "phone_number": "",
+    "health_state": "практически здоров",
+    "gender": "М",
+    "image": ""
+  }
+},
+{
+  "model": "core.applicantmodel",
+  "pk": 19,
+  "fields": {
+    "surname": "Красовская",
+    "first_name": "Валерия",
+    "patronymic_name": "Дмитриевна",
+    "birth_date": "1992-03-11",
+    "phone_number": "+77772832211",
+    "health_state": "Не очень здорова, первые признаки шизофрении",
+    "gender": "Ж",
+    "image": ""
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 1,
+  "fields": {
+    "date": "2022-10-16T07:14:26Z",
+    "number": 4,
+    "card_number": null,
+    "applicant": 1,
+    "status": "Завершено",
+    "description": "Резкие боли в сердце, возможно приступ",
+    "injured_count": null,
+    "dont_call": false,
+    "services": [
+      5,
+      2
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 2,
+  "fields": {
+    "date": "2022-11-02T07:23:48Z",
+    "number": 6,
+    "card_number": null,
+    "applicant": 2,
+    "status": "Завершено",
+    "description": "Температура у ребенка 37.5",
+    "injured_count": null,
+    "dont_call": false,
+    "services": [
+      6
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 3,
+  "fields": {
+    "date": "2022-11-02T08:25:36Z",
+    "number": 12,
+    "card_number": null,
+    "applicant": 3,
+    "status": "Завершено",
+    "description": "Почему это вообще здесь?",
+    "injured_count": null,
+    "dont_call": false,
+    "services": []
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 4,
+  "fields": {
+    "date": "2022-11-02T20:29:41Z",
+    "number": 45,
+    "card_number": null,
+    "applicant": 3,
+    "status": "В работе",
+    "description": "Еще одно пустое обращение от Алексея. Температура на улице -1 градус",
+    "injured_count": 1,
+    "dont_call": true,
+    "services": []
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 5,
+  "fields": {
+    "date": "2022-11-03T14:07:02Z",
+    "number": 77,
+    "card_number": null,
+    "applicant": 1,
+    "status": "Завершено",
+    "description": "",
+    "injured_count": 0,
+    "dont_call": false,
+    "services": [
+      6
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 6,
+  "fields": {
+    "date": "2022-11-03T18:36:38Z",
+    "number": 91,
+    "card_number": null,
+    "applicant": 2,
+    "status": "В работе",
+    "description": "Тест",
+    "injured_count": 6,
+    "dont_call": false,
+    "services": [
+      4,
+      5,
+      6,
+      2,
+      3
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 7,
+  "fields": {
+    "date": "2022-11-03T18:42:45.702Z",
+    "number": 110,
+    "card_number": null,
+    "applicant": 8,
+    "status": "В работе",
+    "description": "Новое обращение",
+    "injured_count": null,
+    "dont_call": false,
+    "services": [
+      4,
+      1,
+      3
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 8,
+  "fields": {
+    "date": "2022-11-08T11:14:07Z",
+    "number": 880948535,
+    "card_number": null,
+    "applicant": 2,
+    "status": "Завершено",
+    "description": "Ничего здесь нет",
+    "injured_count": 8,
+    "dont_call": true,
+    "services": [
+      5,
+      6
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 9,
+  "fields": {
+    "date": "2022-11-08T11:20:02Z",
+    "number": 898,
+    "card_number": null,
+    "applicant": 15,
+    "status": "В работе",
+    "description": "Тролль",
+    "injured_count": 3,
+    "dont_call": false,
+    "services": [
+      6,
+      1
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 10,
+  "fields": {
+    "date": "2022-11-11T08:38:26Z",
+    "number": 797,
+    "card_number": null,
+    "applicant": 18,
+    "status": "В работе",
+    "description": "Тест функциональной формы",
+    "injured_count": 5,
+    "dont_call": true,
+    "services": [
+      4,
+      3,
+      7
+    ]
+  }
+},
+{
+  "model": "core.appealmodel",
+  "pk": 11,
+  "fields": {
+    "date": "2022-11-11T11:56:35Z",
+    "number": 666,
+    "card_number": null,
+    "applicant": 17,
+    "status": "В работе",
+    "description": "Апокалипсис",
+    "injured_count": 8000000000,
+    "dont_call": true,
+    "services": [
+      4,
+      5,
+      1,
+      2,
+      3
+    ]
+  }
+}
+]

@@ -8,10 +8,22 @@
     margin-top: 10px;
 }
 
+#nav-menu {
+    padding-bottom: 10px;
+}
 #nav-menu button {
     border: 1px solid black;
 }
 
 #nav-menu button:hover {
     background-color: #b0b0ff
+}
+
+#nav-menu button[aria-expanded="true"] {
+    background-color: #404080;
+    color: white;
+}
+
+.nav-menu-category {
+    display: inline-block;
 }

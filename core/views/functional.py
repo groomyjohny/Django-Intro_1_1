@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse, HttpResponse
-from core import models
+from core import models, filters, forms
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Avg, Count
 
@@ -54,20 +54,122 @@ def footer_view(request):
 
 def all_applicants_view(request):
     users = models.ApplicantModel.objects.all()
-    return render(request, "all_applicants.html", context={'users': users})
+    return render(request, "all_applicants.html", context={'object_list': users})
 
 
 def all_applicants_numbered_view(request):
     users = models.ApplicantModel.objects.all()
-    return render(request, 'all_applicants_numbered.html', context={'users': users})
+    return render(request, 'all_applicants_numbered.html', context={'object_list': users})
 
 
 def all_accidents_view(request):
     accidents = models.AccidentModel.objects.all()
-    return render(request, "all_accidents.html", context={'accidents': accidents})
+    return render(request, "all_accidents.html", context={'object_list': accidents})
 
 
 def all_appeals_view(request):
     appeals = models.AppealModel.objects.all()
     c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
-    return render(request, "all_appeals.html", context={'appeals': appeals, 'avg_service_count': c['services__count__avg']})
+    return render(request, "all_appeals.html", context={'object_list': appeals, 'avg_service_count': c['services__count__avg']})
+
+
+def add_accident(request):
+    if request.method == 'GET':
+        return render(request, 'add_accident.html', context={'form': forms.AccidentForm()})
+    if request.method == 'POST':
+        f = forms.AccidentForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_accident.html', status=201, context={'form': forms.AccidentForm()})
+        else:
+            return render(request, 'add_accident.html', status=400, context={'form': f})
+
+
+def add_appeal(request):
+    if request.method == 'GET':
+        return render(request, 'add_appeal.html', context={'form': forms.AppealForm()})
+    if request.method == 'POST':
+        f = forms.AppealForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_appeal.html', status=201, context={'form': forms.AppealForm()})
+        else:
+            return render(request, 'add_appeal.html', status=400, context={'form': f})
+
+
+def add_applicant(request):
+    if request.method == 'GET':
+        return render(request, 'add_applicant.html', context={'form': forms.ApplicantForm()})
+    if request.method == 'POST':
+        f = forms.ApplicantForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_applicant.html', status=201, context={'form': forms.ApplicantForm()})
+        else:
+            return render(request, 'add_applicant.html', status=400, context={'form': f})
+
+
+def add_service(request):
+    if request.method == 'GET':
+        return render(request, 'add_service.html', context={'form': forms.ServiceForm()})
+    if request.method == 'POST':
+        f = forms.ServiceForm(request.POST)
+        if f.is_valid():
+            f.save()
+            return render(request, 'add_service.html', status=201, context={'form': forms.ServiceForm()})
+        else:
+            return render(request, 'add_service.html', status=400, context={'form': f})
+
+
+def edit_service(request, pk):
+    obj = get_object_or_404(models.EmergencyServiceModel, id=pk)
+    if request.method == 'GET':
+        return render(request, 'edit_service.html', context={'form': forms.ServiceForm(instance=obj)})
+    if request.method == 'POST':
+        f = forms.ServiceForm(request.POST, instance=obj)
+        if f.is_valid():
+            f.save()
+            return render(request, 'edit_service.html', status=201, context={'form': forms.ServiceForm()})
+        else:
+            return render(request, 'edit_service.html', status=400, context={'form': f})
+
+
+def edit_applicant(request, pk):
+    obj = get_object_or_404(models.ApplicantModel, id=pk)
+    if request.method == 'GET':
+        return render(request, 'edit_applicant.html', context={'form': forms.ApplicantForm(instance=obj)})
+    if request.method == 'POST':
+        f = forms.ApplicantForm(request.POST, instance=obj)
+        if f.is_valid():
+            f.save()
+            return render(request, 'edit_applicant.html', status=201, context={'form': forms.ApplicantForm()})
+        else:
+            return render(request, 'edit_applicant.html', status=400, context={'form': f})
+
+
+def edit_appeal(request, pk):
+    obj = get_object_or_404(models.AppealModel, id=pk)
+    if request.method == 'GET':
+        return render(request, 'edit_appeal.html', context={'form': forms.AppealForm(instance=obj)})
+    if request.method == 'POST':
+        f = forms.AppealForm(request.POST, instance=obj)
+        if f.is_valid():
+            f.save()
+            return render(request, 'edit_appeal.html', status=201, context={'form': forms.AppealForm()})
+        else:
+            return render(request, 'edit_appeal.html', status=400, context={'form': f})
+
+
+def filter_applicant(request):
+    filter = filters.ApplicantFilter(request.GET)
+    return render(request, 'filter_applicant.html', context={'filter': filter})
+
+
+def filter_appeal(request):
+    filter = filters.AppealFilter(request.GET)
+    return render(request, 'filter_appeal.html', context={'filter': filter})
+
+
+def filter_applicant_activity(request):
+    filter = filters.ApplicantNameFilter(request.GET)
+    return render(request, 'filter_applicant_name.html', context={'filter': filter})

@@ -6,21 +6,21 @@ from django.db.models import Q, Count
 
 
 class ApplicantNameSearchMixin:
-    def applicant_full_name_filter(self, queryset, name, value, surname, first_name, middle_name, filter):
+    def applicant_full_name_filter(self, queryset, name, value, surname_field, first_name_field, middle_name_field, filter):
         total_q = Q()
         s = value.split(' ')
-        sn, fn, mn = (i+'__'+filter for i in (surname, first_name, middle_name))
+        sn, fn, mn = (i+'__'+filter for i in (surname_field, first_name_field, middle_name_field))
 
-        if len(s) == 0:
+        if len(s) == 0:  # if nothing is inputted, no search is needed
             return queryset
-        elif len(s) == 1:
-            total_q |= Q(**{sn: s[0]}) | Q(**{fn: s[0]}) | Q(**{mn: s[0]})
-        elif len(s) == 2:
+        elif len(s) == 1:  # if there's one string, then search it in all 3 name fields
+            total_q |= Q((sn, s[0])) | Q((fn, s[0])) | Q((mn, s[0]))
+        elif len(s) == 2:  # if there are two strings, then search it in (Surname then First name) and (First name then Middle name)
             total_q |= \
-                (Q(**{sn: s[0]}) & Q(**{fn: s[1]})) | \
-                (Q(**{fn: s[0]}) & Q(**{mn: s[1]}))
-        elif len(s) == 3:
-            total_q |= Q(**{sn: s[0]}) & Q(**{fn: s[1]}) & Q(**{mn: s[2]})
+                ( Q((sn, s[0])) & Q((fn, s[1])) ) | \
+                ( Q((fn, s[0])) & Q((mn, s[1])) )
+        elif len(s) == 3:  # if there are three strings, then search all of them in order
+            total_q |= Q((sn, s[0])) & Q((fn, s[1])) & Q((mn, s[2]))
         else:
             return queryset.none()
 

@@ -12,11 +12,9 @@ urlpatterns = [
 
     path('all_applicants', core.views.functional.all_applicants_view),
     path('all_applicants_numbered', core.views.functional.all_applicants_numbered_view),
-    path('all_accidents', core.views.functional.all_accidents_view),
     path('all_appeals', core.views.functional.all_appeals_view),
 
-    path('add_appeal', core.views.functional.add_accident),
-    path('add_accident', core.views.functional.add_accident),
+    path('add_appeal', core.views.functional.add_appeal),
     path('add_applicant', core.views.functional.add_applicant),
     path('add_service', core.views.functional.add_service),
 

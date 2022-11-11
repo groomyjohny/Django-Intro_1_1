@@ -7,7 +7,7 @@ from django.db.models import Avg, Count
 
 
 def accident_count_view(request):
-    count = models.AccidentModel.objects.count()
+    count = models.AppealModel.objects.count()
     if count == 0:
         return HttpResponse(404)
     return render(request, "views_1.html", context={'count': count})
@@ -62,27 +62,10 @@ def all_applicants_numbered_view(request):
     return render(request, 'all_applicants_numbered.html', context={'object_list': users})
 
 
-def all_accidents_view(request):
-    accidents = models.AccidentModel.objects.all()
-    return render(request, "all_accidents.html", context={'object_list': accidents})
-
-
 def all_appeals_view(request):
     appeals = models.AppealModel.objects.all()
     c = appeals.annotate(Count('services')).aggregate(Avg('services__count'))
     return render(request, "all_appeals.html", context={'object_list': appeals, 'avg_service_count': c['services__count__avg']})
-
-
-def add_accident(request):
-    if request.method == 'GET':
-        return render(request, 'add_accident.html', context={'form': forms.AccidentForm()})
-    if request.method == 'POST':
-        f = forms.AccidentForm(request.POST)
-        if f.is_valid():
-            f.save()
-            return render(request, 'add_accident.html', status=201, context={'form': forms.AccidentForm()})
-        else:
-            return render(request, 'add_accident.html', status=400, context={'form': f})
 
 
 def add_appeal(request):

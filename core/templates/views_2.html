@@ -1,4 +1,10 @@
 {% extends 'global_template.html' %}
+
+{% block 'head' %}
+    <title>Данные заявителя {{id}}</title>
+{% endblock %}
+
+
 {% block 'container' %}
     <h1>Номер телефона заявителя с ID {{id}}: {{phone}}</h1>
 {% endblock %}

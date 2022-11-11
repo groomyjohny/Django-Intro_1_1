@@ -33,15 +33,3 @@ class AppealForm(forms.ModelForm):
         help_texts = {
             'services': 'Нажмите и держите клавишу CTRL для выбора нескольких служб',
         }
-
-
-class AccidentForm(forms.ModelForm):
-    class Meta:
-        model = models.AccidentModel
-        fields = '__all__'
-        help_texts = {
-            'services': 'Нажмите и держите клавишу CTRL для выбора нескольких служб',
-        }
-        labels = {
-            'services': 'Задействованные службы',
-        }

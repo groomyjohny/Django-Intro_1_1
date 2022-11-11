@@ -5,20 +5,41 @@ from core import models
 from django.db.models import Q, Count
 
 
+# TODO: all of this needs refactoring. Lots of code duplication
 class ApplicantFilter(django_filters.FilterSet):
     applicant_full_name_contains = django_filters.CharFilter(method='applicant_full_name_contains_filter', label='ФИО заявителя содержит')
     applicant_full_name_exact = django_filters.CharFilter(method='applicant_full_name_exact_filter', label='ФИО заявителя (точное)')
     birth_year_exact = django_filters.CharFilter(method='birth_year_exact_filter', label='Год рождения', max_length=4)
 
     def applicant_full_name_contains_filter(self, queryset, name, value):
-        return queryset.filter(
-            Q(surname__icontains=value) | Q(first_name__icontains=value) | Q(patronymic_name__icontains=value)
-        )
+        total_q = Q()
+        s = value.split(' ')
+        if len(s) == 1:
+            total_q |= Q(surname__icontains=s[0]) | Q(first_name__icontains=s[0]) | Q(patronymic_name__icontains=s[0])
+        elif len(s) == 2:
+            total_q |= (Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1])) | \
+                       (Q(first_name__icontains=s[0]) & Q(patronymic_name__icontains=s[1]))
+        elif len(s) == 3:
+            total_q |= Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1]) & Q(patronymic_name__icontains=s[2])
+        else:
+            return queryset.none()
+
+        return queryset.filter(total_q)
 
     def applicant_full_name_exact_filter(self, queryset, name, value):
-        return queryset.filter(
-            Q(surname__exact=value) | Q(first_name__exact=value) | Q(patronymic_name__exact=value)
-        )
+        total_q = Q()
+        s = value.split(' ')
+        if len(s) == 1:
+            total_q |= Q(surname__exact=s[0]) | Q(first_name__exact=s[0]) | Q(patronymic_name__exact=s[0])
+        elif len(s) == 2:
+            total_q |= (Q(surname__exact=s[0]) & Q(first_name__exact=s[1])) | \
+                       (Q(first_name__exact=s[0]) & Q(patronymic_name__exact=s[1]))
+        elif len(s) == 3:
+            total_q |= Q(surname__exact=s[0]) & Q(first_name__exact=s[1]) & Q(patronymic_name__exact=s[2])
+        else:
+            return queryset.none()
+
+        return queryset.filter(total_q)
 
     def birth_year_exact_filter(self, queryset, name, value):
         target_year = int(value)
@@ -48,18 +69,38 @@ class AppealFilter(django_filters.FilterSet):
     service_code_exact = django_filters.CharFilter(method='service_code_exact_filter', label='Код службы (точный)')
 
     def applicant_full_name_contains_filter(self, queryset, name, value):
-        return queryset.filter(
-            Q(applicant__surname__icontains=value) |
-            Q(applicant__first_name__icontains=value) |
-            Q(applicant__patronymic_name__icontains=value)
-        )
+        total_q = Q()
+        s = value.split(' ')
+        if len(s) == 1:
+            total_q |= Q(applicant__surname__icontains=s[0]) | Q(applicant__first_name__icontains=s[0]) | Q(
+                applicant__patronymic_name__icontains=s[0])
+        elif len(s) == 2:
+            total_q |= (Q(applicant__surname__icontains=s[0]) & Q(applicant__first_name__icontains=s[1])) | \
+                       (Q(applicant__first_name__icontains=s[0]) & Q(applicant__patronymic_name__icontains=s[1]))
+        elif len(s) == 3:
+            total_q |= Q(applicant__surname__icontains=s[0]) & Q(applicant__first_name__icontains=s[1]) & Q(
+                applicant__patronymic_name__icontains=s[2])
+        else:
+            return queryset.none()
+
+        return queryset.filter(total_q)
 
     def applicant_full_name_exact_filter(self, queryset, name, value):
-        return queryset.filter(
-            Q(applicant__surname__exact=value) |
-            Q(applicant__first_name__exact=value) |
-            Q(applicant__patronymic_name__exact=value)
-        )
+        total_q = Q()
+        s = value.split(' ')
+        if len(s) == 1:
+            total_q |= Q(applicant__surname__exact=s[0]) | Q(applicant__first_name__exact=s[0]) | Q(
+                applicant__patronymic_name__exact=s[0])
+        elif len(s) == 2:
+            total_q |= (Q(applicant__surname__exact=s[0]) & Q(applicant__first_name__exact=s[1])) | \
+                       (Q(applicant__first_name__exact=s[0]) & Q(applicant__patronymic_name__exact=s[1]))
+        elif len(s) == 3:
+            total_q |= Q(applicant__surname__exact=s[0]) & Q(applicant__first_name__exact=s[1]) & Q(
+                applicant__patronymic_name__exact=s[2])
+        else:
+            return queryset.none()
+
+        return queryset.filter(total_q)
 
     def service_code_contains_filter(self, queryset, name, value):
         return queryset.filter(services__service_code__icontains=value).distinct()
@@ -83,19 +124,34 @@ class ApplicantNameFilter(django_filters.FilterSet):
     appeals_count_range = django_filters.RangeFilter(method='appeals_count', label='Количество обращений')
 
     def name_contains_filter(self, queryset, name, value):
-        v = queryset.filter(
-            Q(surname__icontains=value) |
-            Q(first_name__icontains=value) |
-            Q(patronymic_name__icontains=value)
-        )
-        return v
+        total_q = Q()
+        s = value.split(' ')
+        if len(s) == 1:
+            total_q |= Q(surname__icontains=s[0]) | Q(first_name__icontains=s[0]) | Q(patronymic_name__icontains=s[0])
+        elif len(s) == 2:
+            total_q |= (Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1])) | \
+                       (Q(first_name__icontains=s[0]) & Q(patronymic_name__icontains=s[1]))
+        elif len(s) == 3:
+            total_q |= Q(surname__icontains=s[0]) & Q(first_name__icontains=s[1]) & Q(patronymic_name__icontains=s[2])
+        else:
+            return queryset.none()
+
+        return queryset.filter(total_q)
 
     def name_contains_exact(self, queryset, name, value):
-        return queryset.filter(
-            Q(surname__exact=value) |
-            Q(first_name__exact=value) |
-            Q(patronymic_name__exact=value)
-        )
+        total_q = Q()
+        s = value.split(' ')
+        if len(s) == 1:
+            total_q |= Q(surname__exact=s[0]) | Q(first_name__exact=s[0]) | Q(patronymic_name__exact=s[0])
+        elif len(s) == 2:
+            total_q |= (Q(surname__exact=s[0]) & Q(first_name__exact=s[1])) | \
+                       (Q(first_name__exact=s[0]) & Q(patronymic_name__exact=s[1]))
+        elif len(s) == 3:
+            total_q |= Q(surname__exact=s[0]) & Q(first_name__exact=s[1]) & Q(patronymic_name__exact=s[2])
+        else:
+            return queryset.none()
+
+        return queryset.filter(total_q)
 
 
     def appeals_count(self, queryset, name, value):

@@ -1,7 +1,7 @@
 Tested in manage.py shell
 
 from core import *
-from django.db.models import Q
+from django.db.models import Q, Min, Max, Avg, Sum, Count
 from datetime import datetime
 
 
@@ -211,33 +211,33 @@ print("Len: ",len(django.db.connection.queries))
 
 	
 27) Выведите все значения дат создания происшествий. Поместите даты в список.
-models.AccidentModel.objects.values_list('addition_datetime')
+models.AppealModel.objects.values_list('date')
 
 28) Создайте queryset, который будет всегда пустым.
 models.AppealModel.objects.none()
 
 29) Вывести среднее количество пострадавших в происшествиях
 from django.db.models import Avg
-models.AccidentModel.objects.aggregate(Avg('injured_count'))
+models.AppealModel.objects.aggregate(Avg('injured_count'))
 
 30)  Вывести общее количество пострадавших в происшествиях
 from django.db.models import Sum
-models.AccidentModel.objects.aggregate(Sum('injured_count'))
+models.AppealModel.objects.aggregate(Sum('injured_count'))
 
 31) Вывести количество вызванных экстренных служб для каждого происшествия
-qs = models.AccidentModel.objects.annotate(Count('services'))
+qs = models.AppealModel.objects.annotate(Count('services'))
 for i in qs: # qs.values('services__count')
 	print(i.number, i.injured_count, i.services__count)
 	
 # or
-models.AccidentModel.objects.annotate(Count('services')).values()
+models.AppealModel.objects.annotate(Count('services')).values()
 	
 32) Вывести среднее количество вызванных экстренных служб
-models.AccidentModel.objects.annotate(Count('services')).aggregate(Avg('services__count'))
+models.AppealModel.objects.annotate(Count('services')).aggregate(Avg('services__count')) # Warning: null values are ignored by Avg!
 
 33) Вывести наибольшее и наименьшее количество пострадавших
 from django.db.models import Min, Max
-models.AccidentModel.objects.aggregate(Min('injured_count'),Max('injured_count'))
+models.AppealModel.objects.aggregate(Min('injured_count'),Max('injured_count'))
 
 34)  Сформировать запрос к модели заявитель, в котором будет добавлено поле с количеством обращений каждого заявителя.
 models.ApplicantModel.objects.all().annotate(Count('appeals'))

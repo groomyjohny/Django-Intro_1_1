@@ -16,7 +16,7 @@ class AccidentCountView(TemplateView):
     template_name = 'views_1.html'
 
     def get_context_data(self, **kwargs):
-        count = models.AccidentModel.objects.count()
+        count = models.AppealModel.objects.count()
         if count == 0:
             raise Http404
         return {'count': count}
@@ -79,11 +79,6 @@ class AllApllicantsNumberedView(ListView):
     template_name = 'all_applicants_numbered.html'
 
 
-class AllAccidentsView(ListView):
-    model = models.AccidentModel
-    template_name = 'all_accidents.html'
-
-
 class AllAppealsView(ListView):
     model = models.AppealModel
     template_name = 'all_appeals.html'
@@ -113,12 +108,6 @@ class AddAppealView(CreateView):
     template_name = 'add_appeal.html'
     form_class = forms.AppealForm
     success_url = 'add_appeal'
-
-
-class AddAccidentView(CreateView):
-    template_name = 'add_accident.html'
-    form_class = forms.AccidentForm
-    success_url = 'add_accident'
 
 
 class CoreUpdateView(UpdateView):

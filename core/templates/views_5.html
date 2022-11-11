@@ -1,4 +1,10 @@
 {% extends 'global_template.html' %}
+
+{% block 'head' %}
+    <title>Данные заявителя</title>
+{% endblock %}
+
+
 {% block 'container' %}
     {% with user_in_a_list as object_list %}
         {% include 'applicant_render.html' %}

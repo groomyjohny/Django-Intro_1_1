@@ -2,3 +2,4 @@ Django
 Pillow
 python-dateutil
 django-filter
+django-dump-load-utf8

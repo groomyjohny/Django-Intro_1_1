@@ -3,7 +3,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 1,
   "fields": {
-    "name": "Полиция",
+    "name": "РџРѕР»РёС†РёСЏ",
     "service_code": "02",
     "phone_number": "02"
   }
@@ -12,7 +12,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 2,
   "fields": {
-    "name": "Скорая помощь",
+    "name": "РЎРєРѕСЂР°СЏ РїРѕРјРѕС‰СЊ",
     "service_code": "03",
     "phone_number": "03"
   }
@@ -21,7 +21,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 3,
   "fields": {
-    "name": "Газовая служба",
+    "name": "Р“Р°Р·РѕРІР°СЏ СЃР»СѓР¶Р±Р°",
     "service_code": "04",
     "phone_number": "04"
   }
@@ -30,7 +30,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 4,
   "fields": {
-    "name": "Пожарная служба",
+    "name": "РџРѕР¶Р°СЂРЅР°СЏ СЃР»СѓР¶Р±Р°",
     "service_code": "01",
     "phone_number": "01"
   }
@@ -39,7 +39,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 5,
   "fields": {
-    "name": "Общая экcтренная служба",
+    "name": "РћР±С‰Р°СЏ СЌРєcС‚СЂРµРЅРЅР°СЏ СЃР»СѓР¶Р±Р°",
     "service_code": "010",
     "phone_number": "112"
   }
@@ -48,7 +48,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 6,
   "fields": {
-    "name": "Неэкстренная служба",
+    "name": "РќРµСЌРєСЃС‚СЂРµРЅРЅР°СЏ СЃР»СѓР¶Р±Р°",
     "service_code": "016",
     "phone_number": "999"
   }
@@ -57,7 +57,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 7,
   "fields": {
-    "name": "Новая экстренная служба",
+    "name": "РќРѕРІР°СЏ СЌРєСЃС‚СЂРµРЅРЅР°СЏ СЃР»СѓР¶Р±Р°",
     "service_code": "113",
     "phone_number": "2334"
   }
@@ -66,7 +66,7 @@
   "model": "core.emergencyservicemodel",
   "pk": 8,
   "fields": {
-    "name": "Новая 2-я экстренная служба",
+    "name": "РќРѕРІР°СЏ 2-СЏ СЌРєСЃС‚СЂРµРЅРЅР°СЏ СЃР»СѓР¶Р±Р°",
     "service_code": "129",
     "phone_number": "888"
   }
@@ -84,27 +84,27 @@
   "model": "core.applicantmodel",
   "pk": 1,
   "fields": {
-    "surname": "Иванов",
-    "first_name": "Иван",
-    "patronymic_name": "Иванович",
+    "surname": "РРІР°РЅРѕРІ",
+    "first_name": "РРІР°РЅ",
+    "patronymic_name": "РРІР°РЅРѕРІРёС‡",
     "birth_date": "1966-04-23",
     "phone_number": "89873333333",
-    "health_state": "Жалуется на нерегулярную боль в спине",
-    "gender": "М",
-    "image": "Безымянный_uMoHhBU.png"
+    "health_state": "Р–Р°Р»СѓРµС‚СЃСЏ РЅР° РЅРµСЂРµРіСѓР»СЏСЂРЅСѓСЋ Р±РѕР»СЊ РІ СЃРїРёРЅРµ",
+    "gender": "Рњ",
+    "image": "Р‘РµР·С‹РјСЏРЅРЅС‹Р№_uMoHhBU.png"
   }
 },
 {
   "model": "core.applicantmodel",
   "pk": 2,
   "fields": {
-    "surname": "Кузнецова",
-    "first_name": "Мария",
-    "patronymic_name": "Петровна",
+    "surname": "РљСѓР·РЅРµС†РѕРІР°",
+    "first_name": "РњР°СЂРёСЏ",
+    "patronymic_name": "РџРµС‚СЂРѕРІРЅР°",
     "birth_date": "1977-01-31",
     "phone_number": "89879009023",
-    "health_state": "Собирается провести плановый медосмотр",
-    "gender": "Ж",
+    "health_state": "РЎРѕР±РёСЂР°РµС‚СЃСЏ РїСЂРѕРІРµСЃС‚Рё РїР»Р°РЅРѕРІС‹Р№ РјРµРґРѕСЃРјРѕС‚СЂ",
+    "gender": "Р–",
     "image": ""
   }
 },
@@ -112,13 +112,13 @@
   "model": "core.applicantmodel",
   "pk": 3,
   "fields": {
-    "surname": "Петров",
-    "first_name": "Алексей",
-    "patronymic_name": "Иванович",
+    "surname": "РџРµС‚СЂРѕРІ",
+    "first_name": "РђР»РµРєСЃРµР№",
+    "patronymic_name": "РРІР°РЅРѕРІРёС‡",
     "birth_date": "1989-01-01",
     "phone_number": "89053113322",
-    "health_state": "Нет предыдущих обращений",
-    "gender": "М",
+    "health_state": "РќРµС‚ РїСЂРµРґС‹РґСѓС‰РёС… РѕР±СЂР°С‰РµРЅРёР№",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -126,13 +126,13 @@
   "model": "core.applicantmodel",
   "pk": 4,
   "fields": {
-    "surname": "Кузьмин",
-    "first_name": "Андрей",
-    "patronymic_name": "Петрович",
+    "surname": "РљСѓР·СЊРјРёРЅ",
+    "first_name": "РђРЅРґСЂРµР№",
+    "patronymic_name": "РџРµС‚СЂРѕРІРёС‡",
     "birth_date": "1988-02-23",
     "phone_number": "890343234255",
-    "health_state": "практически здоров",
-    "gender": "М",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІ",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -140,13 +140,13 @@
   "model": "core.applicantmodel",
   "pk": 5,
   "fields": {
-    "surname": "Орлова",
-    "first_name": "Анастасия",
-    "patronymic_name": "Павловна",
+    "surname": "РћСЂР»РѕРІР°",
+    "first_name": "РђРЅР°СЃС‚Р°СЃРёСЏ",
+    "patronymic_name": "РџР°РІР»РѕРІРЅР°",
     "birth_date": "2005-11-23",
     "phone_number": "893534224534",
-    "health_state": "практически здорова",
-    "gender": "Ж",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІР°",
+    "gender": "Р–",
     "image": ""
   }
 },
@@ -154,13 +154,13 @@
   "model": "core.applicantmodel",
   "pk": 7,
   "fields": {
-    "surname": "Петров",
-    "first_name": "Антон",
-    "patronymic_name": "Валерьевич",
+    "surname": "РџРµС‚СЂРѕРІ",
+    "first_name": "РђРЅС‚РѕРЅ",
+    "patronymic_name": "Р’Р°Р»РµСЂСЊРµРІРёС‡",
     "birth_date": "1974-03-23",
     "phone_number": "891782934232",
-    "health_state": "Полностью здоров(а)",
-    "gender": "М",
+    "health_state": "РџРѕР»РЅРѕСЃС‚СЊСЋ Р·РґРѕСЂРѕРІ(Р°)",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -168,14 +168,14 @@
   "model": "core.applicantmodel",
   "pk": 8,
   "fields": {
-    "surname": "Курышева",
-    "first_name": "Вера",
-    "patronymic_name": "Антоновна",
+    "surname": "РљСѓСЂС‹С€РµРІР°",
+    "first_name": "Р’РµСЂР°",
+    "patronymic_name": "РђРЅС‚РѕРЅРѕРІРЅР°",
     "birth_date": "1988-10-22",
     "phone_number": "8917283422333",
-    "health_state": "Полностью здоров(а)",
-    "gender": "Ж",
-    "image": "Безымянный.png"
+    "health_state": "РџРѕР»РЅРѕСЃС‚СЊСЋ Р·РґРѕСЂРѕРІ(Р°)",
+    "gender": "Р–",
+    "image": "Р‘РµР·С‹РјСЏРЅРЅС‹Р№.png"
   }
 },
 {
@@ -187,8 +187,8 @@
     "patronymic_name": "",
     "birth_date": null,
     "phone_number": "23452345",
-    "health_state": "Полностью здоров(а)",
-    "gender": "М",
+    "health_state": "РџРѕР»РЅРѕСЃС‚СЊСЋ Р·РґРѕСЂРѕРІ(Р°)",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -196,13 +196,13 @@
   "model": "core.applicantmodel",
   "pk": 13,
   "fields": {
-    "surname": "Андреев",
-    "first_name": "Павел",
-    "patronymic_name": "Валерьевич",
+    "surname": "РђРЅРґСЂРµРµРІ",
+    "first_name": "РџР°РІРµР»",
+    "patronymic_name": "Р’Р°Р»РµСЂСЊРµРІРёС‡",
     "birth_date": "1989-02-11",
     "phone_number": "",
-    "health_state": "практически здоров",
-    "gender": "М",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІ",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -210,13 +210,13 @@
   "model": "core.applicantmodel",
   "pk": 14,
   "fields": {
-    "surname": "Красина",
-    "first_name": "Елена",
-    "patronymic_name": "Анатольевна",
+    "surname": "РљСЂР°СЃРёРЅР°",
+    "first_name": "Р•Р»РµРЅР°",
+    "patronymic_name": "РђРЅР°С‚РѕР»СЊРµРІРЅР°",
     "birth_date": "1992-07-12",
     "phone_number": "",
-    "health_state": "практически здоров",
-    "gender": "Ж",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІ",
+    "gender": "Р–",
     "image": ""
   }
 },
@@ -224,13 +224,13 @@
   "model": "core.applicantmodel",
   "pk": 15,
   "fields": {
-    "surname": "ЗАГЛАВНЫМИ",
-    "first_name": "ВСЕ",
-    "patronymic_name": "БУКВАМИ",
+    "surname": "Р—РђР“Р›РђР’РќР«РњР",
+    "first_name": "Р’РЎР•",
+    "patronymic_name": "Р‘РЈРљР’РђРњР",
     "birth_date": "1994-02-04",
     "phone_number": "",
-    "health_state": "практически здоров",
-    "gender": "М",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІ",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -238,13 +238,13 @@
   "model": "core.applicantmodel",
   "pk": 16,
   "fields": {
-    "surname": "буквы",
-    "first_name": "маленькие",
-    "patronymic_name": "везде",
+    "surname": "Р±СѓРєРІС‹",
+    "first_name": "РјР°Р»РµРЅСЊРєРёРµ",
+    "patronymic_name": "РІРµР·РґРµ",
     "birth_date": "1992-10-22",
     "phone_number": "958694596",
-    "health_state": "практически здоров",
-    "gender": "М",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІ",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -252,13 +252,13 @@
   "model": "core.applicantmodel",
   "pk": 17,
   "fields": {
-    "surname": "БукВЫ",
-    "first_name": "сЛучАЙные",
-    "patronymic_name": "В_имЕнИ",
+    "surname": "Р‘СѓРєР’Р«",
+    "first_name": "СЃР›СѓС‡РђР™РЅС‹Рµ",
+    "patronymic_name": "Р’_РёРјР•РЅР",
     "birth_date": "2007-12-20",
     "phone_number": "",
-    "health_state": "практически здоров",
-    "gender": "М",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІ",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -266,13 +266,13 @@
   "model": "core.applicantmodel",
   "pk": 18,
   "fields": {
-    "surname": "ещЁ",
-    "first_name": "и",
-    "patronymic_name": "СлуЧаЙНЫх",
+    "surname": "РµС‰РЃ",
+    "first_name": "Рё",
+    "patronymic_name": "РЎР»СѓР§Р°Р™РќР«С…",
     "birth_date": "2008-04-05",
     "phone_number": "",
-    "health_state": "практически здоров",
-    "gender": "М",
+    "health_state": "РїСЂР°РєС‚РёС‡РµСЃРєРё Р·РґРѕСЂРѕРІ",
+    "gender": "Рњ",
     "image": ""
   }
 },
@@ -280,13 +280,13 @@
   "model": "core.applicantmodel",
   "pk": 19,
   "fields": {
-    "surname": "Красовская",
-    "first_name": "Валерия",
-    "patronymic_name": "Дмитриевна",
+    "surname": "РљСЂР°СЃРѕРІСЃРєР°СЏ",
+    "first_name": "Р’Р°Р»РµСЂРёСЏ",
+    "patronymic_name": "Р”РјРёС‚СЂРёРµРІРЅР°",
     "birth_date": "1992-03-11",
     "phone_number": "+77772832211",
-    "health_state": "Не очень здорова, первые признаки шизофрении",
-    "gender": "Ж",
+    "health_state": "РќРµ РѕС‡РµРЅСЊ Р·РґРѕСЂРѕРІР°, РїРµСЂРІС‹Рµ РїСЂРёР·РЅР°РєРё С€РёР·РѕС„СЂРµРЅРёРё",
+    "gender": "Р–",
     "image": ""
   }
 },
@@ -298,8 +298,8 @@
     "number": 4,
     "card_number": null,
     "applicant": 1,
-    "status": "Завершено",
-    "description": "Резкие боли в сердце, возможно приступ",
+    "status": "Р—Р°РІРµСЂС€РµРЅРѕ",
+    "description": "Р РµР·РєРёРµ Р±РѕР»Рё РІ СЃРµСЂРґС†Рµ, РІРѕР·РјРѕР¶РЅРѕ РїСЂРёСЃС‚СѓРї",
     "injured_count": null,
     "dont_call": false,
     "services": [
@@ -316,8 +316,8 @@
     "number": 6,
     "card_number": null,
     "applicant": 2,
-    "status": "Завершено",
-    "description": "Температура у ребенка 37.5",
+    "status": "Р—Р°РІРµСЂС€РµРЅРѕ",
+    "description": "РўРµРјРїРµСЂР°С‚СѓСЂР° Сѓ СЂРµР±РµРЅРєР° 37.5",
     "injured_count": null,
     "dont_call": false,
     "services": [
@@ -333,8 +333,8 @@
     "number": 12,
     "card_number": null,
     "applicant": 3,
-    "status": "Завершено",
-    "description": "Почему это вообще здесь?",
+    "status": "Р—Р°РІРµСЂС€РµРЅРѕ",
+    "description": "РџРѕС‡РµРјСѓ СЌС‚Рѕ РІРѕРѕР±С‰Рµ Р·РґРµСЃСЊ?",
     "injured_count": null,
     "dont_call": false,
     "services": []
@@ -348,8 +348,8 @@
     "number": 45,
     "card_number": null,
     "applicant": 3,
-    "status": "В работе",
-    "description": "Еще одно пустое обращение от Алексея. Температура на улице -1 градус",
+    "status": "Р’ СЂР°Р±РѕС‚Рµ",
+    "description": "Р•С‰Рµ РѕРґРЅРѕ РїСѓСЃС‚РѕРµ РѕР±СЂР°С‰РµРЅРёРµ РѕС‚ РђР»РµРєСЃРµСЏ. РўРµРјРїРµСЂР°С‚СѓСЂР° РЅР° СѓР»РёС†Рµ -1 РіСЂР°РґСѓСЃ",
     "injured_count": 1,
     "dont_call": true,
     "services": []
@@ -363,7 +363,7 @@
     "number": 77,
     "card_number": null,
     "applicant": 1,
-    "status": "Завершено",
+    "status": "Р—Р°РІРµСЂС€РµРЅРѕ",
     "description": "",
     "injured_count": 0,
     "dont_call": false,
@@ -380,8 +380,8 @@
     "number": 91,
     "card_number": null,
     "applicant": 2,
-    "status": "В работе",
-    "description": "Тест",
+    "status": "Р’ СЂР°Р±РѕС‚Рµ",
+    "description": "РўРµСЃС‚",
     "injured_count": 6,
     "dont_call": false,
     "services": [
@@ -401,8 +401,8 @@
     "number": 110,
     "card_number": null,
     "applicant": 8,
-    "status": "В работе",
-    "description": "Новое обращение",
+    "status": "Р’ СЂР°Р±РѕС‚Рµ",
+    "description": "РќРѕРІРѕРµ РѕР±СЂР°С‰РµРЅРёРµ",
     "injured_count": null,
     "dont_call": false,
     "services": [
@@ -420,8 +420,8 @@
     "number": 880948535,
     "card_number": null,
     "applicant": 2,
-    "status": "Завершено",
-    "description": "Ничего здесь нет",
+    "status": "Р—Р°РІРµСЂС€РµРЅРѕ",
+    "description": "РќРёС‡РµРіРѕ Р·РґРµСЃСЊ РЅРµС‚",
     "injured_count": 8,
     "dont_call": true,
     "services": [
@@ -438,8 +438,8 @@
     "number": 898,
     "card_number": null,
     "applicant": 15,
-    "status": "В работе",
-    "description": "Тролль",
+    "status": "Р’ СЂР°Р±РѕС‚Рµ",
+    "description": "РўСЂРѕР»Р»СЊ",
     "injured_count": 3,
     "dont_call": false,
     "services": [
@@ -456,8 +456,8 @@
     "number": 797,
     "card_number": null,
     "applicant": 18,
-    "status": "В работе",
-    "description": "Тест функциональной формы",
+    "status": "Р’ СЂР°Р±РѕС‚Рµ",
+    "description": "РўРµСЃС‚ С„СѓРЅРєС†РёРѕРЅР°Р»СЊРЅРѕР№ С„РѕСЂРјС‹",
     "injured_count": 5,
     "dont_call": true,
     "services": [
@@ -475,8 +475,8 @@
     "number": 666,
     "card_number": null,
     "applicant": 17,
-    "status": "В работе",
-    "description": "Апокалипсис",
+    "status": "Р’ СЂР°Р±РѕС‚Рµ",
+    "description": "РђРїРѕРєР°Р»РёРїСЃРёСЃ",
     "injured_count": 8000000000,
     "dont_call": true,
     "services": [

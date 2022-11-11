@@ -158,3 +158,18 @@ def edit_appeal(request, pk):
             return render(request, 'edit_appeal.html', status=201, context={'form': forms.AppealForm()})
         else:
             return render(request, 'edit_appeal.html', status=400, context={'form': f})
+
+
+def filter_applicant(request):
+    filter = filters.ApplicantFilter(request.GET)
+    return render(request, 'filter_applicant.html', context={'filter': filter})
+
+
+def filter_appeal(request):
+    filter = filters.AppealFilter(request.GET)
+    return render(request, 'filter_appeal.html', context={'filter': filter})
+
+
+def filter_applicant_activity(request):
+    filter = filters.ApplicantNameFilter(request.GET)
+    return render(request, 'filter_applicant_name.html', context={'filter': filter})
